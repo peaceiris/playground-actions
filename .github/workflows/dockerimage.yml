@@ -5,12 +5,12 @@ on:
     types: [published]
 
 env:
-  DOCKER_BASE_NAME: docker.pkg.github.com/${{ github.repository }}
+  DOCKER_BASE_NAME: docker.pkg.github.com/${{ github.repository }}/playground
 
 jobs:
 
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
 
     steps:
     - uses: actions/checkout@v1
@@ -24,8 +24,8 @@ jobs:
 
     - name: Set env
       run: |
-        echo "::set-env name=PKG_LATEST::${DOCKER_BASE_NAME}/playground:latest"
-        echo "::set-env name=PKG_TAG::${DOCKER_BASE_NAME}/playground:${{ github.event.release.tag_name }}"
+        echo "::set-env name=PKG_LATEST::${DOCKER_BASE_NAME}:latest"
+        echo "::set-env name=PKG_TAG::${DOCKER_BASE_NAME}:${{ github.event.release.tag_name }}"
 
     - name: Build image
       run: |
