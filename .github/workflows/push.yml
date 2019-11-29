@@ -4,7 +4,7 @@ on: [push]
 
 jobs:
   greeting:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
     #runs-on: macos-latest
     #runs-on: windows-latest
     steps:
@@ -23,8 +23,34 @@ jobs:
     - run: echo ${HOME}
     - run: echo ${GITHUB_WORKSPACE}
     #- run: which certutil
-    - name: Install Linuxbrew
-      run: sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
 
 #    - name: Hello from GitHub Package Registry
 #      uses: docker://docker.pkg.github.com/peaceiris/playground-actions/latest:latest
+
+  push-latest:
+    runs-on: ubuntu-18.04
+    env:
+      DOCKER_BASE_NAME: docker.pkg.github.com/${{ github.repository }}/playground
+    steps:
+
+    - uses: actions/checkout@v1
+      with:
+        fetch-depth: 1
+
+    - name: Set env
+      run: |
+        echo "::set-env name=PKG_LATEST::${DOCKER_BASE_NAME}:latest"
+
+    - name: Build image
+      run: |
+        docker build . --file Dockerfile --tag "${PKG_LATEST}"
+
+    - name: Login to Package Registry
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        echo "${GITHUB_TOKEN}" | docker login docker.pkg.github.com -u peaceiris --password-stdin
+
+    - name: Push latest
+      run: |
+        docker push "${PKG_LATEST}"
