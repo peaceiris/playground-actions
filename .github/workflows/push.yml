@@ -1,0 +1,30 @@
+name: Push
+
+on: [push]
+
+jobs:
+  greeting:
+    runs-on: ubuntu-latest
+    #runs-on: macos-latest
+    #runs-on: windows-latest
+    steps:
+
+    - name: Dump GitHub context
+      env:
+        GITHUB_CONTEXT: ${{ toJson(github) }}
+      run: echo "${GITHUB_CONTEXT}"
+
+    - name: hello
+      run: |
+        pwd
+        #ls -la
+        #which shasum
+
+    - run: echo ${HOME}
+    - run: echo ${GITHUB_WORKSPACE}
+    #- run: which certutil
+    - name: Install Linuxbrew
+      run: sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
+
+#    - name: Hello from GitHub Package Registry
+#      uses: docker://docker.pkg.github.com/peaceiris/playground-actions/latest:latest
