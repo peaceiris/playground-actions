@@ -24,25 +24,17 @@ jobs:
 
     - name: Set env
       run: |
-        echo "::set-env name=PKG_LATEST::${DOCKER_BASE_NAME}:latest"
         echo "::set-env name=PKG_TAG::${DOCKER_BASE_NAME}:${{ github.event.release.tag_name }}"
 
     - name: Build image
       run: |
-        docker build . --file Dockerfile --tag "${PKG_LATEST}"
-        docker tag "${PKG_LATEST}" "${PKG_TAG}"
+        docker build . --file Dockerfile --tag "${PKG_TAG}"
 
     - name: Login to Package Registry
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         echo "${GITHUB_TOKEN}" | docker login docker.pkg.github.com -u peaceiris --password-stdin
-
-    - name: Push latest
-      if: github.event.release.prerelease	== false
-      #if: github.event.release.target_commitish == 'master'
-      run: |
-        docker push "${PKG_LATEST}"
 
     - name: Push tag
       run: |
