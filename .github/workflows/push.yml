@@ -1,6 +1,11 @@
-name: Push
+name: Main CI
 
-on: [push]
+on:
+  push:
+    branches:
+    - master
+  pull_request:
+    types: [opened, synchronize]
 
 jobs:
   greeting:
@@ -8,6 +13,10 @@ jobs:
     #runs-on: macos-latest
     #runs-on: windows-latest
     steps:
+
+    - uses: actions/checkout@v1
+      with:
+        fetch-depth: 1
 
     - name: Dump GitHub context
       env:
@@ -29,7 +38,6 @@ jobs:
 
   push-latest:
     runs-on: ubuntu-18.04
-    if: endsWith(github.ref, 'refs/heads/master')
     env:
       DOCKER_BASE_NAME: docker.pkg.github.com/${{ github.repository }}/playground
     steps:
@@ -46,12 +54,18 @@ jobs:
       run: |
         docker build . --file Dockerfile --tag "${PKG_LATEST}"
 
+    - name: Test
+      run: |
+        docker run --rm -i -t "${PKG_LATEST}"
+
     - name: Login to Package Registry
+      if: endsWith(github.ref, 'refs/heads/master')
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         echo "${GITHUB_TOKEN}" | docker login docker.pkg.github.com -u peaceiris --password-stdin
 
     - name: Push latest
+      if: endsWith(github.ref, 'refs/heads/master')
       run: |
         docker push "${PKG_LATEST}"
