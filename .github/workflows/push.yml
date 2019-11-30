@@ -59,13 +59,13 @@ jobs:
         docker run --rm "${PKG_LATEST}"
 
     - name: Login to Package Registry
-      if: endsWith(github.ref, 'refs/heads/master')
+      if: github.ref == 'refs/heads/master'
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         echo "${GITHUB_TOKEN}" | docker login docker.pkg.github.com -u peaceiris --password-stdin
 
     - name: Push latest
-      if: endsWith(github.ref, 'refs/heads/master')
+      if: github.ref == 'refs/heads/master'
       run: |
         docker push "${PKG_LATEST}"
