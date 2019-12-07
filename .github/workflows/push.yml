@@ -64,7 +64,8 @@ jobs:
       uses: actions/cache@v1
       with:
         path: ~/.cache/trivy
-        key: trivy-db
+        key: ${{ runner.os }}-trivy-${{ hashFiles('~/.cache/trivy/vuln-list/last_updated.json') }}
+        restore-keys: ${{ runner.os }}-trivy-
 
     - name: Scan image
       run: |
