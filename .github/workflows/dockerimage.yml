@@ -22,12 +22,6 @@ jobs:
         GITHUB_CONTEXT: ${{ toJson(github) }}
       run: echo "${GITHUB_CONTEXT}"
 
-    - name: Cache Trivy database
-      uses: actions/cache@v1
-      with:
-        path: ~/.cache/trivy
-        key: trivy-db
-
     - name: Set env
       run: |
         echo "::set-env name=PKG_TAG::${DOCKER_BASE_NAME}:${{ github.event.release.tag_name }}"
@@ -35,11 +29,6 @@ jobs:
     - name: Build image
       run: |
         docker build . --file Dockerfile --tag "${PKG_TAG}"
-
-    - name: Scan image
-      run: |
-        docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \
-          -v ${HOME}/.cache:/root/.cache aquasec/trivy:latest --exit-code 1 "${PKG_TAG}"
 
     - name: Login to Package Registry
       env:
