@@ -18,4 +18,4 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           image: "alpine:3.10.1"
-          show_commit_hash: true
+          # show_commit_hash: true
