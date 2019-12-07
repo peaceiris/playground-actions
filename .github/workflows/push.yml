@@ -60,6 +60,17 @@ jobs:
       run: |
         docker run --rm "${PKG_LATEST}"
 
+    - name: Cache Trivy database
+      uses: actions/cache@v1
+      with:
+        path: ~/.cache/trivy
+        key: trivy-db
+
+    - name: Scan image
+      run: |
+        docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \
+          -v ${HOME}/.cache:/root/.cache aquasec/trivy:latest --exit-code 1 "${PKG_TAG}"
+
     - name: Login to Package Registry
       if: github.ref == 'refs/heads/master'
       env:
