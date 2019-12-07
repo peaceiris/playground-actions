@@ -65,7 +65,7 @@ jobs:
         docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \
           -v ${HOME}/.cache:/root/.cache aquasec/trivy:latest --exit-code 1 "${PKG_LATEST}"
 
-    - run: du -sh ${HOME}/.cache/trivy
+    - run: sudo du -sh ${HOME}/.cache/trivy
 
     - name: Login to Package Registry
       if: github.ref == 'refs/heads/master'
