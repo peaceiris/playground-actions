@@ -1,0 +1,28 @@
+name: Update major tag
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  update:
+    runs-on: ubuntu-18.04
+    steps:
+
+    - uses: actions/checkout@v1
+
+    - name: Dump GitHub context
+      env:
+        GITHUB_CONTEXT: ${{ toJson(github) }}
+      run: echo "${GITHUB_CONTEXT}"
+
+    - name: Update major tag
+      run: |
+        git config user.name "${GITHUB_ACTOR}"
+        git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+        echo "::debug::github.ref ${{ github.ref }}"
+        export TAG_MAJOR="v0"
+        # git tag -d "${TAG_MAJOR}"
+        # git push origin ":refs/tags/${TAG_MAJOR}"
+        git tag "${TAG_MAJOR}"
+        git push --tags origin
