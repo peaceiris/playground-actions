@@ -50,24 +50,24 @@ jobs:
 
     - name: Set env
       run: |
-        echo "::set-env name=PKG_LATEST::${DOCKER_BASE_NAME}:latest"
+        echo "::set-env name=PKG_TAG::${DOCKER_BASE_NAME}:latest"
 
     - name: Build image
       run: |
-        docker build . --file Dockerfile --tag "${PKG_LATEST}"
+        docker build . --file Dockerfile --tag "${PKG_TAG}"
 
     - name: Test
       run: |
-        docker run --rm "${PKG_LATEST}"
+        docker run --rm "${PKG_TAG}"
 
     - name: Scan image
       run: |
         # export TRIVY_TAG=$(curl -s https://api.github.com/repos/aquasecurity/trivy/releases/latest | jq -r ".tag_name" | cut -d 'v' -f 2)
         # wget https://github.com/aquasecurity/trivy/releases/download/v${TRIVY_TAG}/trivy_${TRIVY_TAG}_Linux-64bit.tar.gz
         # tar -zxvf trivy_${TRIVY_TAG}_Linux-64bit.tar.gz
-        # ./trivy --exit-code 1 "${PKG_LATEST}"
+        # ./trivy --exit-code 1 "${PKG_TAG}"
         docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \
-          -v ${HOME}/.cache:/root/.cache aquasec/trivy:latest --exit-code 1 "${PKG_LATEST}"
+          -v ${HOME}/.cache:/root/.cache aquasec/trivy:latest --exit-code 1 "${PKG_TAG}"
 
     - run: sudo du -sh ${HOME}/.cache/trivy
 
@@ -81,4 +81,4 @@ jobs:
     - name: Push latest
       if: github.ref == 'refs/heads/master'
       run: |
-        docker push "${PKG_LATEST}"
+        docker push "${PKG_TAG}"
