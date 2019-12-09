@@ -30,5 +30,7 @@ jobs:
         with:
           draft: true
           prerelease: ${{ steps.is-prerelease.outputs.IS_PRERELEASE }}
-          # body_path: path/to/body_path.txt
-          # files: path/to/assets.txt
+          body_path: CHANGELOG.md
+          files: |
+            asset_1.txt
+            asset_2.txt
