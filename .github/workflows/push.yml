@@ -35,9 +35,6 @@ jobs:
     - run: echo ${GITHUB_WORKSPACE}
     #- run: which certutil
 
-#    - name: Hello from GitHub Package Registry
-#      uses: docker://docker.pkg.github.com/peaceiris/playground-actions/latest:latest
-
   push-latest:
     runs-on: ubuntu-18.04
     env:
@@ -82,3 +79,7 @@ jobs:
       if: github.ref == 'refs/heads/master'
       run: |
         docker push "${PKG_TAG}"
+
+#    - name: Hello from GitHub Package Registry
+#      uses: docker://docker.pkg.github.com/peaceiris/playground-actions/latest:latest
+
