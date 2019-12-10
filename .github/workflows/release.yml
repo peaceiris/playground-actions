@@ -22,54 +22,20 @@ jobs:
         id: is-prerelease
         run: |
           if [ -n "$(echo "${TAG_NAME}" | grep '\-')" ]; then
-            # export IS_PRERELEASE="true"
-            export IS_PRERELEASE="-prerelease"
+            export IS_PRERELEASE="true"
           else
-            # export IS_PRERELEASE="false"
-            export IS_PRERELEASE=""
+            export IS_PRERELEASE="false"
           fi
-          # echo "::set-output name=IS_PRERELEASE::${IS_PRERELEASE}"
-          echo "::set-env name=IS_PRERELEASE::${IS_PRERELEASE}"
-
-      - name: Setup ghr
-        run: |
-          export GHR_VERSION="v0.13.0"
-          export GHR_NAME="ghr_${GHR_VERSION}_linux_amd64"
-          export GHR_TARBALL="${GHR_NAME}.tar.gz"
-          wget "https://github.com/tcnksm/ghr/releases/download/${GHR_VERSION}/${GHR_TARBALL}"
-          tar -zxvf "${GHR_TARBALL}"
-          mkdir ~/bin
-          mv "./${GHR_NAME}/ghr" ~/bin/
-          echo "::add-path::~/bin"
-          rm -rf "./${GHR_NAME}" "./${GHR_TARBALL}"
+          echo "::set-output name=IS_PRERELEASE::${IS_PRERELEASE}"
 
       - name: Release
+        uses: softprops/action-gh-release@78c309ef59fdb9557cd6574f2e0be552936ed728  # v0.1.4
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          # https://github.com/tcnksm/ghr
-          ghr \
-            -t "${GITHUB_TOKEN}" \
-            # -u USERNAME \
-            -r "${GITHUB_REPOSITORY}" \
-            -c "${GITHUB_SHA}" \
-            -n "Release ${TAG_NAME}" \
-            -b "./CHANGELOG.md" \
-            # -p NUM \
-            # -replace \  # Replace artifacts if it is already uploaded
-            -draft \
-            -soft \
-            "${IS_PRERELEASE}" \
-            "${TAG_NAME}" assets/
-
-#       - name: Release
-#         uses: softprops/action-gh-release@v1
-#         env:
-#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#         with:
-#           draft: true
-#           prerelease: ${{ steps.is-prerelease.outputs.IS_PRERELEASE }}
-#           body_path: CHANGELOG.md
-#           files: |
-#             asset_1.txt
-#             asset_2.txt
+        with:
+          draft: true
+          prerelease: ${{ steps.is-prerelease.outputs.IS_PRERELEASE }}
+          body_path: CHANGELOG.md
+          files: |
+            asset_1.txt
+            asset_2.txt
