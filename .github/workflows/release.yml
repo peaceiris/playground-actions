@@ -12,10 +12,15 @@ jobs:
 
       - uses: actions/checkout@v1
 
+      - name: Set env
+        run: echo "::set-env name=TAG_NAME::${GITHUB_REF##refs/tags/}"
+
+      - name: Validate tag format
+        run: npx semver "${TAG_NAME}"
+
       - name: Is prerelease
         id: is-prerelease
         run: |
-          export TAG_NAME="${GITHUB_REF##refs/tags/}"
           if [ -n "$(echo "${TAG_NAME}" | grep '\-')" ]; then
             export IS_PRERELEASE="true"
           else
