@@ -60,7 +60,7 @@ jobs:
             -draft \
             -soft \
             "${IS_PRERELEASE}" \
-            "${TAG_NAME}" ./assets
+            "${TAG_NAME}" assets/
 
 #       - name: Release
 #         uses: softprops/action-gh-release@v1
