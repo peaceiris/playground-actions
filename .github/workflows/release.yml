@@ -54,7 +54,7 @@ jobs:
             -r "${GITHUB_REPOSITORY}" \
             -c "${GITHUB_SHA}" \
             -n "Release ${TAG_NAME}" \
-            -b "$(cat ./CHANGELOG.md)" \
+            -b "./CHANGELOG.md" \
             # -p NUM \
             # -replace \  # Replace artifacts if it is already uploaded
             -draft \
