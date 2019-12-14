@@ -1,3 +1,8 @@
+#!/usr/bin/env bash
+
+# fail on unset variables and command errors
+set -eu -o pipefail # -x: is for debugging
+
 if [ $(git branch --show-current) != "master" ]; then
     echo "Current branch is not master" 1>&2
     exit 1
