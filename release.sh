@@ -1,3 +1,13 @@
+if [ $(git branch --show-current) != "master" ]; then
+    echo "Current branch is not master" 1>&2
+    exit 1
+fi
+if [ $# -ne 1 ]; then
+    echo "Length of argument must be 1" 1>&2
+    exit 1
+fi
+git fetch origin
+git pull origin master
 npm version $1
 git push origin HEAD
 git push origin "v$(jq -r '.version' package.json)"
