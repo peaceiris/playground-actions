@@ -14,10 +14,7 @@ jobs:
     #runs-on: windows-latest
     steps:
 
-    - uses: actions/checkout@v1
-      with:
-        fetch-depth: 1
-        # ref: v0.1.1
+    - uses: actions/checkout@v2
 
     - name: Dump GitHub context
       env:
@@ -41,9 +38,7 @@ jobs:
       DOCKER_BASE_NAME: docker.pkg.github.com/${{ github.repository }}/playground
     steps:
 
-    - uses: actions/checkout@v1
-      with:
-        fetch-depth: 1
+    - uses: actions/checkout@v2
 
     - name: Set env
       run: |
