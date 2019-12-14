@@ -8,7 +8,8 @@
     "release-it": "^12.4.3"
   },
   "scripts": {
-    "test": "echo 'test'"
+    "test": "echo 'test'",
+    "pushtag": "git push origin v${npm_package_version}"
   },
   "repository": {
     "type": "git",
