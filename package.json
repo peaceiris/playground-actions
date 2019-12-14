@@ -1,0 +1,23 @@
+{
+  "name": "playground-actions",
+  "version": "1.0.6",
+  "description": "GitHub Actions playground",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "release-it": "^12.4.3"
+  },
+  "scripts": {
+    "test": "echo 'test'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/peaceiris/playground-actions.git"
+  },
+  "author": "peaceiris",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/peaceiris/playground-actions/issues"
+  },
+  "homepage": "https://github.com/peaceiris/playground-actions#readme"
+}
