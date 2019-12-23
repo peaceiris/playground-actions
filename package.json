@@ -9,7 +9,9 @@
   },
   "scripts": {
     "test": "echo 'test'",
-    "pushtag": "git push origin v${npm_package_version}"
+    "pushtag": "git push origin v${npm_package_version}",
+    "preversion": "git checkout master && git fetch origin && git pull origin master",
+    "postversion": "git push origin HEAD && git push origin v$(jq -r '.version' package.json)"
   },
   "repository": {
     "type": "git",

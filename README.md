@@ -1,5 +1,5 @@
-# playground-actions
+## playground-actions
 
 ```sh
-bash release.sh prepatch
+npm version prepatch
 ```
