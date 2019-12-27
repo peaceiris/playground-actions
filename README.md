@@ -2,4 +2,5 @@
 
 ```sh
 npm version prepatch
+npm version prerelease
 ```
