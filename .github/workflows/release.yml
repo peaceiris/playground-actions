@@ -13,21 +13,21 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Set env
-        run: echo "::set-env name=TAG_NAME::${GITHUB_REF##refs/tags/}"
+      # - name: Set env
+      #   run: echo "::set-env name=TAG_NAME::${GITHUB_REF##refs/tags/}"
 
-      - name: Validate tag format
-        run: npx semver "${TAG_NAME}"
+      # - name: Validate tag format
+      #   run: npx semver "${TAG_NAME}"
 
-      - name: Is prerelease
-        id: is-prerelease
-        run: |
-          if [ -n "$(echo "${TAG_NAME}" | grep '\-')" ]; then
-            export IS_PRERELEASE="true"
-          else
-            export IS_PRERELEASE="false"
-          fi
-          echo "::set-output name=IS_PRERELEASE::${IS_PRERELEASE}"
+      # - name: Is prerelease
+      #   id: is-prerelease
+      #   run: |
+      #     if [ -n "$(echo "${TAG_NAME}" | grep '\-')" ]; then
+      #       export IS_PRERELEASE="true"
+      #     else
+      #       export IS_PRERELEASE="false"
+      #     fi
+      #     echo "::set-output name=IS_PRERELEASE::${IS_PRERELEASE}"
 
       - name: Read .nvmrc
         run: echo "::set-output name=NVMRC::$(cat .nvmrc)"
