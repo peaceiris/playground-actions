@@ -3,15 +3,16 @@ name: Release
 on:
   push:
     branches:
-      - 'release-patch'
-    # tags:
-    #   - "v*.*.*"
+      - 'release-*'
 
 jobs:
   release:
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
+
+      - name: Get release type
+        run: echo "::set-env name=RELEASE_TYPE::${GITHUB_REF#refs/heads/release-}"
 
       # - name: Set env
       #   run: echo "::set-env name=TAG_NAME::${GITHUB_REF##refs/tags/}"
@@ -54,7 +55,7 @@ jobs:
         run: |
           git config user.name "${GITHUB_ACTOR}"
           git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
-          npm run release -- patch
+          npm run release -- "${RELEASE_TYPE}"
 
       # - name: Release
       #   uses: softprops/action-gh-release@78c309ef59fdb9557cd6574f2e0be552936ed728  # v0.1.4

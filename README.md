@@ -1,6 +1,7 @@
 ## playground-actions
 
 ```sh
-npm version prepatch
-npm version prerelease
+g cob release-prepatch
+g cob release-prerelease
+g cob release-patch
 ```
