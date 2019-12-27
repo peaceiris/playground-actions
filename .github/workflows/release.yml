@@ -29,7 +29,9 @@ jobs:
           echo "::set-output name=IS_PRERELEASE::${IS_PRERELEASE}"
 
       - name: Release
-        run: |
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
           npm run release -- "${TAG_NAME}" --ci --dry-run
 
       # - name: Release
