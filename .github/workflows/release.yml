@@ -32,7 +32,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          npm run release -- "${TAG_NAME}" --ci --dry-run
+          npm run release -- "${TAG_NAME}" --ci
 
       # - name: Release
       #   uses: softprops/action-gh-release@78c309ef59fdb9557cd6574f2e0be552936ed728  # v0.1.4
