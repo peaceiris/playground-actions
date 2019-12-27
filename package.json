@@ -10,7 +10,8 @@
   "scripts": {
     "test": "echo 'test'",
     "preversion": "git checkout master && git fetch origin && git pull origin master",
-    "postversion": "git push origin HEAD && git push origin v${npm_package_version}"
+    "postversion": "git push origin HEAD && git push origin v${npm_package_version}",
+    "release": "release-it --config .github/.release-it.json"
   },
   "repository": {
     "type": "git",
