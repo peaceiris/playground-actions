@@ -3,13 +3,12 @@ name: Release
 on:
   push:
     tags:
-      - 'v*.*.*'
+      - "v*.*.*"
 
 jobs:
   release:
     runs-on: ubuntu-18.04
     steps:
-
       - uses: actions/checkout@v2
 
       - name: Set env
@@ -28,11 +27,30 @@ jobs:
           fi
           echo "::set-output name=IS_PRERELEASE::${IS_PRERELEASE}"
 
+          - name: Read .nvmrc
+          run: echo "::set-output name=NVMRC::$(cat .nvmrc)"
+          id: nvm
+
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: "${{ steps.nvm.outputs.NVMRC }}"
+
+      - name: Cache
+        uses: actions/cache@v1
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - run: npm ci
+
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          npm run release -- "${TAG_NAME}" --ci
+          npm run release -- "${TAG_NAME}"
 
       # - name: Release
       #   uses: softprops/action-gh-release@78c309ef59fdb9557cd6574f2e0be552936ed728  # v0.1.4
