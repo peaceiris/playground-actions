@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## 1.0.19 (2019-12-28)
+
+
+### ci
+
+* 🎡 remove commitizen and husky ([c207185](https://github.com/peaceiris/playground-actions/commit/c207185a4f3333d60fc2c3511a64eb43276d7e0f))
+
+
+
 ## 1.0.18 (2019-12-28)
 
 
