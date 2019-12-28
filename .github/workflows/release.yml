@@ -3,6 +3,8 @@ name: Release
 on:
   pull_request:
     types: [opened, synchronize]
+    branches:
+      - 'release-*'
 
 jobs:
   release:
