@@ -59,7 +59,6 @@ jobs:
           export TAG_NAME="v$(jq -r '.version' ./package.json)"
           git push origin "${TAG_NAME}"
           echo "::set-output name=tag_name::${TAG_NAME}"
-          echo "::set-output name=changelog::$(cat ./CHANGELOG.md)"
 
       - name: Create Release
         id: create_release
@@ -71,4 +70,4 @@ jobs:
           release_name: Playground ${{ steps.prepare_release.outputs.tag_name }}
           draft: true
           prerelease: true
-          body: ${{ steps.prepare_release.outputs.changelog }}
+          body: Changelog
