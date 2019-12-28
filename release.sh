@@ -5,7 +5,7 @@ set -eu -o pipefail # -x: is for debugging
 
 RELEASE_BRANCH="release-${1}"
 
-if [ $(git branch --show-current) != "master" ]; then
+if [ "$(git branch --show-current)" != "master" ]; then
     echo "Current branch is not master" 1>&2
     exit 1
 fi
@@ -15,7 +15,7 @@ if [ $# -ne 1 ]; then
     exit 1
 fi
 
-if [ $(git branch "${RELEASE_BRANCH}") -ne 0 ]; then
+if [ "$(git branch "${RELEASE_BRANCH}")" -ne 0 ]; then
     echo "fatal: A branch named ${RELEASE_BRANCH} already exists." 1>&2
     exit 1
 fi
