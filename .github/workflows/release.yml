@@ -17,14 +17,15 @@ jobs:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         run: echo "${GITHUB_CONTEXT}"
 
-      - name: Get release type
+      - name: Set release env
         run: |
+          BRANCH_NAME="${GITHUB_REF#refs/heads/}"
           if [ "${{ github.event.before }}" == "0000000000000000000000000000000000000000" ]; then
-            HEAD_REF="${{ github.head_ref }}"
-            RELEASE_TYPE="${HEAD_REF#release-}"
+            RELEASE_TYPE="${BRANCH_NAME#release-}"
           else
             RELEASE_TYPE="prerelease"
           fi
+          echo "::set-env name=BRANCH_NAME::${BRANCH_NAME}"
           echo "::set-env name=RELEASE_TYPE::${RELEASE_TYPE}"
 
       - name: Read .nvmrc
@@ -55,12 +56,12 @@ jobs:
           git config user.name "${GITHUB_ACTOR}"
           git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
           git fetch origin
-          git checkout -b "${{ github.head_ref }}" "origin/${{ github.head_ref }}"
+          git checkout -b "${BRANCH_NAME}" "origin/${BRANCH_NAME}"
           npm version "${RELEASE_TYPE}"
-          git push origin "${{ github.head_ref }}"
+          git push origin "${BRANCH_NAME}"
           export TAG_NAME="v$(jq -r '.version' ./package.json)"
           git push origin "${TAG_NAME}"
-          echo "::set-output name=tag_name::${TAG_NAME}"
+          echo "::set-env name=TAG_NAME::${TAG_NAME}"
 
       - name: Install hub
         run: |
@@ -82,4 +83,4 @@ jobs:
             --draft \
             --prerelease \
             --file ./CHANGELOG.md \
-            ${{ steps.prepare_release.outputs.tag_name }}
+            "${TAG_NAME}"
