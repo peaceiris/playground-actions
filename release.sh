@@ -3,16 +3,24 @@
 # fail on unset variables and command errors
 set -eu -o pipefail # -x: is for debugging
 
+RELEASE_BRANCH="release-${1}"
+
 if [ $(git branch --show-current) != "master" ]; then
     echo "Current branch is not master" 1>&2
     exit 1
 fi
+
 if [ $# -ne 1 ]; then
     echo "Length of argument must be 1" 1>&2
     exit 1
 fi
 
+if [ $(git branch "${RELEASE_BRANCH}") -ne 0 ]; then
+    echo "fatal: A branch named ${RELEASE_BRANCH} already exists." 1>&2
+    exit 1
+fi
+
 git fetch origin
 git pull origin master
-git checkout -b release-${1}
-git push origin release-${1}
+git checkout -b "${RELEASE_BRANCH}"
+git push origin "${RELEASE_BRANCH}"
