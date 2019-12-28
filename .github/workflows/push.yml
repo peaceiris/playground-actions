@@ -52,16 +52,16 @@ jobs:
       run: |
         docker run --rm "${PKG_TAG}"
 
-    - name: Scan image
-      run: |
-        # export TRIVY_TAG=$(curl -s https://api.github.com/repos/aquasecurity/trivy/releases/latest | jq -r ".tag_name" | cut -d 'v' -f 2)
-        # wget https://github.com/aquasecurity/trivy/releases/download/v${TRIVY_TAG}/trivy_${TRIVY_TAG}_Linux-64bit.tar.gz
-        # tar -zxvf trivy_${TRIVY_TAG}_Linux-64bit.tar.gz
-        # ./trivy --exit-code 1 "${PKG_TAG}"
-        docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \
-          -v ${HOME}/.cache:/root/.cache aquasec/trivy:latest --exit-code 1 "${PKG_TAG}"
+    # - name: Scan image
+    #   run: |
+    #     # export TRIVY_TAG=$(curl -s https://api.github.com/repos/aquasecurity/trivy/releases/latest | jq -r ".tag_name" | cut -d 'v' -f 2)
+    #     # wget https://github.com/aquasecurity/trivy/releases/download/v${TRIVY_TAG}/trivy_${TRIVY_TAG}_Linux-64bit.tar.gz
+    #     # tar -zxvf trivy_${TRIVY_TAG}_Linux-64bit.tar.gz
+    #     # ./trivy --exit-code 1 "${PKG_TAG}"
+    #     docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \
+    #       -v ${HOME}/.cache:/root/.cache aquasec/trivy:latest --exit-code 1 "${PKG_TAG}"
 
-    - run: sudo du -sh ${HOME}/.cache/trivy
+    # - run: sudo du -sh ${HOME}/.cache/trivy
 
     - name: Login to Package Registry
       if: github.ref == 'refs/heads/master'
