@@ -9,11 +9,11 @@
         "commit": true,
         "commitMessage": "Release ${version}",
         "commitArgs": "",
-        "tag": true,
+        "tag": false,
         "tagName": "${version}",
         "tagAnnotation": "Release ${version}",
         "tagArgs": "",
-        "push": true,
+        "push": false,
         "pushArgs": "--follow-tags",
         "pushRepo": "origin"
     },

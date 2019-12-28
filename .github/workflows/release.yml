@@ -19,9 +19,9 @@ jobs:
         run: |
           if [ "${{ github.event.action }}" == "opened" ]; then
             HEAD_REF="${{ github.head_ref }}"
-            RELEASE_TYPE="${HEAD_REF#release-} --preRelease=rc"
+            RELEASE_TYPE="${HEAD_REF#release-}"
           else
-            RELEASE_TYPE="--preRelease"
+            RELEASE_TYPE="prerelease"
           fi
           echo "::set-env name=RELEASE_TYPE::${RELEASE_TYPE}"
 
@@ -66,7 +66,10 @@ jobs:
         run: |
           git config user.name "${GITHUB_ACTOR}"
           git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
-          npm run release -- "${RELEASE_TYPE}"
+          npm version "${RELEASE_TYPE}"
+          npm run release
+          git push origin HEAD
+          git push origin --tags
 
       # - name: Release
       #   uses: softprops/action-gh-release@78c309ef59fdb9557cd6574f2e0be552936ed728  # v0.1.4
