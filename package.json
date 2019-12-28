@@ -12,7 +12,7 @@
   "scripts": {
     "test": "echo 'test'",
     "release": "standard-version",
-    "cz": "git-cz"
+    "cz": "npx git-cz"
   },
   "husky": {
     "hooks": {
