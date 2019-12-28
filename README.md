@@ -1,6 +1,6 @@
 ## playground-actions
 
 ```sh
-./release.sh prepatch
+./release.sh minor
 ./release.sh patch
 ```
