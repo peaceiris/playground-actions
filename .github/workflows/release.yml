@@ -67,6 +67,7 @@ jobs:
           git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
           git config user.name "${GITHUB_ACTOR}"
           git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+          git fetch origin
           git checkout -b "${{ github.head_ref }}" "origin/${{ github.head_ref }}"
           npm version "${RELEASE_TYPE}"
           npm run release
