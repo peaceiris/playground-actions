@@ -69,16 +69,5 @@ jobs:
           git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
           npm version "${RELEASE_TYPE}"
           npm run release
-          npm run release:push
-
-      # - name: Release
-      #   uses: softprops/action-gh-release@78c309ef59fdb9557cd6574f2e0be552936ed728  # v0.1.4
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #   with:
-      #     draft: true
-      #     prerelease: ${{ steps.is-prerelease.outputs.IS_PRERELEASE }}
-      #     body_path: CHANGELOG.md
-      #     files: |
-      #       asset_1.txt
-      #       asset_2.txt
+          git push origin "${{ github.head_ref }}"
+          git push origin v$(jq -r '.version' ./package.json)

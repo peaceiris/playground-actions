@@ -9,7 +9,6 @@
   },
   "scripts": {
     "test": "echo 'test'",
-    "release:push": "git push origin HEAD && git push origin v${npm_package_version}",
     "release": "release-it --config .github/.release-it.json --ci"
   },
   "repository": {
