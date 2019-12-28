@@ -18,7 +18,7 @@ fi
 git fetch origin
 git pull origin master
 
-if [ "$(git branch "${RELEASE_BRANCH}")" -ne 0 ]; then
+if git branch "${RELEASE_BRANCH}"; then
     echo "fatal: A branch named ${RELEASE_BRANCH} already exists." 1>&2
     exit 1
 fi
