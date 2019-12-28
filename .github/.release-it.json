@@ -15,7 +15,7 @@
         "tagArgs": "",
         "push": true,
         "pushArgs": "--follow-tags",
-        "pushRepo": "origin HEAD"
+        "pushRepo": "origin"
     },
     "npm": {
         "publish": false,
