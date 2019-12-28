@@ -1,6 +1,6 @@
 {
   "name": "playground-actions",
-  "version": "1.0.14-0",
+  "version": "1.0.15-5",
   "description": "GitHub Actions playground",
   "main": "index.js",
   "dependencies": {},
@@ -9,8 +9,6 @@
   },
   "scripts": {
     "test": "echo 'test'",
-    "preversion": "git checkout master && git fetch origin && git pull origin master",
-    "postversion": "git push origin HEAD && git push origin v${npm_package_version}",
     "release": "release-it --config .github/.release-it.json --ci"
   },
   "repository": {

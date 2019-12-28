@@ -25,22 +25,6 @@ jobs:
           fi
           echo "::set-env name=RELEASE_TYPE::${RELEASE_TYPE}"
 
-      # - name: Set env
-      #   run: echo "::set-env name=TAG_NAME::${GITHUB_REF##refs/tags/}"
-
-      # - name: Validate tag format
-      #   run: npx semver "${TAG_NAME}"
-
-      # - name: Is prerelease
-      #   id: is-prerelease
-      #   run: |
-      #     if [ -n "$(echo "${TAG_NAME}" | grep '\-')" ]; then
-      #       export IS_PRERELEASE="true"
-      #     else
-      #       export IS_PRERELEASE="false"
-      #     fi
-      #     echo "::set-output name=IS_PRERELEASE::${IS_PRERELEASE}"
-
       - name: Read .nvmrc
         run: echo "::set-output name=NVMRC::$(cat .nvmrc)"
         id: nvm
@@ -60,25 +44,30 @@ jobs:
 
       - run: npm ci
 
-      - name: Release
+      - name: Prepare release
+        id: prepare_release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
           git config user.name "${GITHUB_ACTOR}"
           git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+          git fetch origin
+          git checkout -b "${{ github.head_ref }}" "origin/${{ github.head_ref }}"
           npm version "${RELEASE_TYPE}"
-          npm run release
-          git push origin HEAD
-          git push origin --tags
+          git push origin "${{ github.head_ref }}"
+          export TAG_NAME="v$(jq -r '.version' ./package.json)"
+          git push origin "${TAG_NAME}"
+          echo "::set-output name=tag_name::${TAG_NAME}"
 
-      # - name: Release
-      #   uses: softprops/action-gh-release@78c309ef59fdb9557cd6574f2e0be552936ed728  # v0.1.4
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #   with:
-      #     draft: true
-      #     prerelease: ${{ steps.is-prerelease.outputs.IS_PRERELEASE }}
-      #     body_path: CHANGELOG.md
-      #     files: |
-      #       asset_1.txt
-      #       asset_2.txt
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.prepare_release.outputs.tag_name }}
+          release_name: Playground ${{ steps.prepare_release.outputs.tag_name }}
+          draft: true
+          prerelease: true
+          body: Changelog
