@@ -2,7 +2,7 @@ name: Release
 
 on:
   pull_request:
-    types: [opened]
+    types: [opened, synchronize]
     branches:
       - 'release-*'
 
@@ -11,6 +11,11 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
+
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "${GITHUB_CONTEXT}"
 
       - name: Get release type
         run: echo "::set-env name=RELEASE_TYPE::${GITHUB_REF#refs/heads/release-}"
