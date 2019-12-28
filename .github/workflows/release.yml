@@ -19,7 +19,7 @@ jobs:
 
       - name: Get release type
         run: |
-          if [ "${{ github.event.action }}" == "opened" ]; then
+          if [ "${{ github.event.before }}" == "0000000000000000000000000000000000000000" ]; then
             HEAD_REF="${{ github.head_ref }}"
             RELEASE_TYPE="${HEAD_REF#release-}"
           else
