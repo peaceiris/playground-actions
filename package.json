@@ -4,7 +4,9 @@
   "description": "GitHub Actions playground",
   "main": "index.js",
   "dependencies": {},
-  "devDependencies": {},
+  "devDependencies": {
+    "standard-version": "^7.0.1"
+  },
   "scripts": {
     "test": "echo 'test'",
     "release": "release-it --config .github/.release-it.json --ci"
