@@ -1,6 +1,6 @@
 {
   "name": "playground-actions",
-  "version": "1.0.15",
+  "version": "1.0.16",
   "description": "GitHub Actions playground",
   "main": "index.js",
   "dependencies": {},
