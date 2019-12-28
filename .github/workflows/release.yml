@@ -59,7 +59,7 @@ jobs:
           git push origin v$(jq -r '.version' ./package.json)
 
       - name: Release
-        uses: softprops/action-gh-release@78c309ef59fdb9557cd6574f2e0be552936ed728  # v0.1.4
+        uses: softprops/action-gh-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
