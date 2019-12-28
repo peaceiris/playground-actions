@@ -87,6 +87,9 @@ jobs:
             "${TAG_NAME}"
 
       - name: Open Pull Request
+        if: github.event.before == '0000000000000000000000000000000000000000'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           BASE_REF="${{ github.event.base_ref }}"
           BASE_BRANCH="${BASE_BRANCH#refs/heads/}"
