@@ -78,9 +78,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          sed -i "1iRelease ${TAG_NAME}\n" ./CHANGELOG.md
+          git diff HEAD^ ./CHANGELOG.md | grep "^+" | sed -e '1d' | sed -e 's/^+//g' > ./release_notes.md
+          sed -i "1iRelease ${TAG_NAME}\n" ./release_notes.md
           hub release create \
             --draft \
             --prerelease \
-            --file ./CHANGELOG.md \
+            --file ./release_notes.md \
             "${TAG_NAME}"
