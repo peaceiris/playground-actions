@@ -16,7 +16,13 @@ jobs:
         run: echo "${GITHUB_CONTEXT}"
 
       - name: Get release type
-        run: echo "::set-env name=RELEASE_TYPE::${GITHUB_REF#refs/heads/release-}"
+        run: |
+          if [ "${{ github.event.action }}" == "opened" ]; then
+            RELEASE_TYPE="${GITHUB_REF#refs/heads/release-} --preRelease=rc"
+          else
+            RELEASE_TYPE="--preRelease"
+          fi
+          echo "::set-env name=RELEASE_TYPE::${RELEASE_TYPE}"
 
       # - name: Set env
       #   run: echo "::set-env name=TAG_NAME::${GITHUB_REF##refs/tags/}"
