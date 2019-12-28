@@ -85,3 +85,14 @@ jobs:
             --prerelease \
             --file ./release_notes.md \
             "${TAG_NAME}"
+
+      - name: Open Pull Request
+        run: |
+          BASE_REF="${{ github.event.base_ref }}"
+          BASE_BRANCH="${BASE_BRANCH#refs/heads/}"
+          USER_ID="${GITHUB_REPOSITORY%/*}"
+          hub pull-request \
+            --draft \
+            --base "${USER_ID}:${BASE_BRANCH}" \
+            --head ${USER_ID}:"${BRANCH_NAME}" \
+            --message "Release ${TAG_NAME}"
