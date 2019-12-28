@@ -56,7 +56,7 @@ jobs:
           git config user.name "${GITHUB_ACTOR}"
           git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
           git fetch origin
-          npm version "${RELEASE_TYPE}"
+          npm run release -- --release-as "${RELEASE_TYPE}"
           git push origin "${BRANCH_NAME}"
           export TAG_NAME="v$(jq -r '.version' ./package.json)"
           git push origin "${TAG_NAME}"

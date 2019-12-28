@@ -9,7 +9,7 @@
   },
   "scripts": {
     "test": "echo 'test'",
-    "release": "release-it --config .github/.release-it.json --ci"
+    "release": "standard-version"
   },
   "repository": {
     "type": "git",
