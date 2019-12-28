@@ -68,8 +68,7 @@ jobs:
           git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
           npm version "${RELEASE_TYPE}"
           npm run release
-          git push origin HEAD
-          git push origin --tags
+          npm run release:push
 
       # - name: Release
       #   uses: softprops/action-gh-release@78c309ef59fdb9557cd6574f2e0be552936ed728  # v0.1.4
