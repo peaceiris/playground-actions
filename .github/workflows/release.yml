@@ -25,22 +25,6 @@ jobs:
           fi
           echo "::set-env name=RELEASE_TYPE::${RELEASE_TYPE}"
 
-      # - name: Set env
-      #   run: echo "::set-env name=TAG_NAME::${GITHUB_REF##refs/tags/}"
-
-      # - name: Validate tag format
-      #   run: npx semver "${TAG_NAME}"
-
-      # - name: Is prerelease
-      #   id: is-prerelease
-      #   run: |
-      #     if [ -n "$(echo "${TAG_NAME}" | grep '\-')" ]; then
-      #       export IS_PRERELEASE="true"
-      #     else
-      #       export IS_PRERELEASE="false"
-      #     fi
-      #     echo "::set-output name=IS_PRERELEASE::${IS_PRERELEASE}"
-
       - name: Read .nvmrc
         run: echo "::set-output name=NVMRC::$(cat .nvmrc)"
         id: nvm
@@ -70,6 +54,18 @@ jobs:
           git fetch origin
           git checkout -b "${{ github.head_ref }}" "origin/${{ github.head_ref }}"
           npm version "${RELEASE_TYPE}"
-          npm run release
+          # npm run release
           git push origin "${{ github.head_ref }}"
           git push origin v$(jq -r '.version' ./package.json)
+
+      - name: Release
+        uses: softprops/action-gh-release@78c309ef59fdb9557cd6574f2e0be552936ed728  # v0.1.4
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          draft: true
+          prerelease: true
+          body_path: CHANGELOG.md
+          files: |
+            asset_1.txt
+            asset_2.txt
