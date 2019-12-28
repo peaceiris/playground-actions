@@ -1,6 +1,6 @@
 ## playground-actions
 
-The latest release v1.0.16
+The latest release v1.0.17
 
 ```sh
 # ./release.sh minor
