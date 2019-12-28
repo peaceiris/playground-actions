@@ -10,6 +10,7 @@ jobs:
   release:
     runs-on: ubuntu-18.04
     steps:
+
       - uses: actions/checkout@v2
 
       - name: Dump GitHub context
@@ -62,14 +63,24 @@ jobs:
           git push origin "${TAG_NAME}"
           echo "::set-output name=tag_name::${TAG_NAME}"
 
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
+      - name: Install hub
+        run: |
+          HUB_VERSION="2.13.0"
+          HUB_NAME="hub-linux-amd64-${HUB_VERSION}"
+          HUB_TARBALL="${HUB_NAME}.tgz"
+          wget -q "https://github.com/github/hub/releases/download/v${HUB_VERSION}/${HUB_TARBALL}"
+          tar -zxvf "./${HUB_TARBALL}"
+          mkdir ~/bin
+          cp "./${HUB_NAME}/bin/hub" ~/bin/
+          echo "::add-path::~/bin/"
+          rm -rf "./${HUB_NAME}" "./${HUB_TARBALL}"
+
+      - name: Create release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ steps.prepare_release.outputs.tag_name }}
-          release_name: Playground ${{ steps.prepare_release.outputs.tag_name }}
-          draft: true
-          prerelease: true
-          body: Changelog
+        run: |
+          hub release create \
+            --draft \
+            --prerelease \
+            --file ./CHANGELOG.md \
+            ${{ steps.prepare_release.outputs.tag_name }}
