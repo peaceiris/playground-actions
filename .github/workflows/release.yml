@@ -21,11 +21,7 @@ jobs:
       - name: Set release env
         run: |
           BRANCH_NAME="${GITHUB_REF#refs/heads/}"
-          if [ "${{ github.event.before }}" == "0000000000000000000000000000000000000000" ]; then
-            RELEASE_TYPE="${BRANCH_NAME#release-}"
-          else
-            RELEASE_TYPE="prerelease"
-          fi
+          RELEASE_TYPE="${BRANCH_NAME#release-}"
           echo "::set-env name=BRANCH_NAME::${BRANCH_NAME}"
           echo "::set-env name=RELEASE_TYPE::${RELEASE_TYPE}"
 
@@ -88,7 +84,6 @@ jobs:
             "${TAG_NAME}"
 
       - name: Open Pull Request
-        if: github.event.before == '0000000000000000000000000000000000000000'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
