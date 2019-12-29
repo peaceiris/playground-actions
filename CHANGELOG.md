@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## 1.0.22 (2019-12-29)
+
+
+### ci
+
+* 🎡 Add filter ([d8916cc](https://github.com/peaceiris/playground-actions/commit/d8916ccfe68fceb5a9a381030d7396b0049a251f))
+
+
+
 ## 1.0.21 (2019-12-29)
 
 
