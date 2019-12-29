@@ -84,6 +84,7 @@ jobs:
             --draft \
             --prerelease \
             --file ./release_notes.md \
+            --attach $(echo ./assets/*) \
             "${TAG_NAME}"
 
       - name: Open Pull Request
