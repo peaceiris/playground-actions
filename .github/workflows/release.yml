@@ -8,6 +8,7 @@ on:
 jobs:
   release:
     runs-on: ubuntu-18.04
+    if: github.event.before == '0000000000000000000000000000000000000000'
     steps:
 
       - uses: actions/checkout@v2
@@ -48,7 +49,6 @@ jobs:
       - run: npm ci
 
       - name: Prepare release
-        id: prepare_release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
