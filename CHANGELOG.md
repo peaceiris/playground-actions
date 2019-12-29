@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## 1.0.20 (2019-12-29)
+
+
+### ci
+
+* 🎡 Add release assets ([fd06eb2](https://github.com/peaceiris/playground-actions/commit/fd06eb2ce6875a7dafe3c6238969fda5a8303d66))
+
+
+
 ## 1.0.19 (2019-12-28)
 
 
