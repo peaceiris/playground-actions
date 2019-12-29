@@ -21,20 +21,6 @@ jobs:
         GITHUB_CONTEXT: ${{ toJson(github) }}
       run: echo "${GITHUB_CONTEXT}"
 
-    - name: Install hub
-      run: |
-        HUB_VERSION="2.13.0"
-        HUB_NAME="hub-linux-amd64-${HUB_VERSION}"
-        HUB_TARBALL="${HUB_NAME}.tgz"
-        wget -q "https://github.com/github/hub/releases/download/v${HUB_VERSION}/${HUB_TARBALL}"
-        tar -zxvf "./${HUB_TARBALL}"
-        mkdir ~/bin
-        cp "./${HUB_NAME}/bin/hub" ~/bin/
-        echo "::add-path::~/bin/"
-        rm -rf "./${HUB_NAME}" "./${HUB_TARBALL}"
-
-    - run: hub version
-
     - name: hello
       run: |
         git branch
