@@ -21,6 +21,10 @@ jobs:
         GITHUB_CONTEXT: ${{ toJson(github) }}
       run: echo "${GITHUB_CONTEXT}"
 
+    - name: Print commit message
+      run: |
+        echo ${{ github.event.commits[0].message }}
+
     - name: hello
       run: |
         git branch
