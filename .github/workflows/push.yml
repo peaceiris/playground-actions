@@ -3,15 +3,21 @@ name: Main CI
 on:
   push:
     branches:
-    - master
+      - master
   pull_request:
-    types: [opened, synchronize]
+    types:
+      - opened
+      - synchronize
 
 jobs:
   greeting:
-    #runs-on: ubuntu-18.04
-    #runs-on: macos-latest
-    runs-on: windows-latest
+    strategy:
+      matrix:
+        os:
+          - 'ubuntu-18.04'
+          - 'macos-latest'
+          - 'windows-latest'
+    runs-on: ${{ matrix.os }}
     steps:
 
     - uses: actions/checkout@v2
@@ -21,20 +27,11 @@ jobs:
         GITHUB_CONTEXT: ${{ toJson(github) }}
       run: echo "${GITHUB_CONTEXT}"
 
-    - name: hello
-      run: |
-        git remote -v
-        pwd
-        #ls -la
-        #which shasum
-
-    - run: echo ${HOME}
-    - run: echo ${USERPROFILE}
-    - run: echo ${GITHUB_WORKSPACE}
-    #- run: which certutil
+    - run: env
 
   push-latest:
     runs-on: ubuntu-18.04
+    if: contains(github.event.head_commit.message, '[skip ci]') == false
     env:
       DOCKER_BASE_NAME: docker.pkg.github.com/${{ github.repository }}/playground
     steps:
