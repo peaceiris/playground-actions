@@ -9,10 +9,9 @@ on:
 
 jobs:
   greeting:
-    runs-on: ubuntu-18.04
+    #runs-on: ubuntu-18.04
     #runs-on: macos-latest
-    #runs-on: windows-latest
-    if: contains(github.event.head_commit.message, '[skip ci]') == false
+    runs-on: windows-latest
     steps:
 
     - uses: actions/checkout@v2
@@ -22,18 +21,15 @@ jobs:
         GITHUB_CONTEXT: ${{ toJson(github) }}
       run: echo "${GITHUB_CONTEXT}"
 
-    - name: Print commit message
-      run: |
-        echo ${{ github.event.commits[0].message }}
-
     - name: hello
       run: |
-        git branch
+        git remote -v
         pwd
         #ls -la
         #which shasum
 
     - run: echo ${HOME}
+    - run: echo ${USERPROFILE}
     - run: echo ${GITHUB_WORKSPACE}
     #- run: which certutil
 
