@@ -28,7 +28,7 @@ jobs:
       run: echo "${GITHUB_CONTEXT}"
 
     - run: env
-    - run: eval "$(ssh-agent)"
+    - run: sh -c 'eval "$(ssh-agent)"'
 
   push-latest:
     runs-on: ubuntu-18.04
