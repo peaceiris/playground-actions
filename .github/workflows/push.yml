@@ -28,11 +28,7 @@ jobs:
       run: echo "${GITHUB_CONTEXT}"
 
     - run: env
-    - run: which ssh-keyscan
-    - run: which chmod
-    - run: which find
-    - run: which tail
-    - run: which xargs
+    - run: eval "$(ssh-agent)"
 
   push-latest:
     runs-on: ubuntu-18.04
