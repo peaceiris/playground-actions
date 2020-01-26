@@ -28,6 +28,7 @@ jobs:
       run: echo "${GITHUB_CONTEXT}"
 
     - run: env
+    - run: curl -fsi https://github.com/peaceiris/playground-actions/releases/latest | awk -F/ '/^Location:/ {print $(NF)}'
     - run: sh -c 'eval "$(ssh-agent)"'
 
   push-latest:
