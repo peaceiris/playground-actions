@@ -19,17 +19,16 @@ jobs:
           - 'windows-latest'
     runs-on: ${{ matrix.os }}
     steps:
+      - uses: actions/checkout@v2
 
-    - uses: actions/checkout@v2
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "${GITHUB_CONTEXT}"
 
-    - name: Dump GitHub context
-      env:
-        GITHUB_CONTEXT: ${{ toJson(github) }}
-      run: echo "${GITHUB_CONTEXT}"
-
-    - run: env
-    - run: curl -fsi "https://github.com/${GITHUB_REPOSITORY}/releases/latest" | awk -F/ '/^Location:/ {print $(NF)}'
-    - run: sh -c 'eval "$(ssh-agent)"'
+      - run: env
+      - run: curl -fsi "https://github.com/${GITHUB_REPOSITORY}/releases/latest" | awk -F/ '/^Location:/ {print $(NF)}'
+      - run: sh -c 'eval "$(ssh-agent)"'
 
   push-latest:
     runs-on: ubuntu-18.04
