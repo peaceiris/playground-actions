@@ -14,9 +14,9 @@ jobs:
     strategy:
       matrix:
         os:
-          #- 'ubuntu-18.04'
+          - 'ubuntu-18.04'
           #- 'macos-latest'
-          - 'windows-latest'
+          #- 'windows-latest'
     runs-on: ${{ matrix.os }}
     steps:
       - name: Fetch the latest tag
