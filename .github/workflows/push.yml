@@ -19,7 +19,16 @@ jobs:
           - 'windows-latest'
     runs-on: ${{ matrix.os }}
     steps:
+      - name: Fetch the latest tag
+        id: latest_tag
+        run: |
+          export LATEST_TAG="$(curl -fsi "https://github.com/${GITHUB_REPOSITORY}/releases/latest" | awk -F/ '/^(L|l)ocation:/ {print $(NF)}')"
+          echo "::set-output name=latest_tag::${LATEST_TAG}"
+
       - uses: actions/checkout@v2
+        with:
+          ref: ${{ steps.latest_tag.outputs.latest_tag }}
+      - run: git log
 
       - name: Dump GitHub context
         env:
