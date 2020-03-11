@@ -25,12 +25,13 @@ jobs:
 
       - run: ls -la ~/.ssh
       - run: |
-          echo "hoge" > hoge.txt
-          git add hoge.txt
+          echo "hoge" >> hoge.txt
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git commit -m "Add hoge.txt"
-          git push origin master
+          git checkout -b sshkey
+          git add hoge.txt
+          git commit -m "update hoge.txt"
+          git push origin sshkey
 
       - name: Dump GitHub context
         env:
