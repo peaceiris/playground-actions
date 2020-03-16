@@ -9,7 +9,7 @@ on:
       - opened
       - synchronize
   schedule:
-    - cron: '5 * * * *'
+    - cron: '*/5 * * * *'
 
 jobs:
   greeting:
@@ -25,7 +25,8 @@ jobs:
         # with:
           # ssh-key: ${{ secrets.ACTIONS_SSH_KEY }}
 
-      - run: ls -la ~/.ssh
+      - run: ls -la ~
+#      - run: ls -la ~/.ssh
 #       - run: |
 #           echo "hoge" >> hoge.txt
 #           git config user.name "github-actions[bot]"
