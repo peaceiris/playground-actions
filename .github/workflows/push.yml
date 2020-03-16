@@ -25,6 +25,11 @@ jobs:
         # with:
           # ssh-key: ${{ secrets.ACTIONS_SSH_KEY }}
 
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "${GITHUB_CONTEXT}"
+
       - run: ls -la ~
 #      - run: ls -la ~/.ssh
 #       - run: |
@@ -35,11 +40,6 @@ jobs:
 #           git add hoge.txt
 #           git commit -m "update hoge.txt"
 #           git push origin sshkey
-
-      - name: Dump GitHub context
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: echo "${GITHUB_CONTEXT}"
 
       - run: env
       - run: curl -fsi "https://github.com/${GITHUB_REPOSITORY}/releases/latest" | awk -F/ '/^Location:/ {print $(NF)}'
