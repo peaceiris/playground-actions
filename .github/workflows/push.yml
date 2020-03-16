@@ -8,8 +8,8 @@ on:
     types:
       - opened
       - synchronize
-  schedule:
-    - cron: '*/5 * * * *'
+#   schedule:
+#     - cron: '*/5 * * * *'
 
 jobs:
   greeting:
