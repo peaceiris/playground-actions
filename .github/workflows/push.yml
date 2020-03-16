@@ -21,19 +21,19 @@ jobs:
           #- 'windows-latest'
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@master
-        with:
-          ssh-key: ${{ secrets.ACTIONS_SSH_KEY }}
+      - uses: actions/checkout@v2  # master
+        # with:
+          # ssh-key: ${{ secrets.ACTIONS_SSH_KEY }}
 
       - run: ls -la ~/.ssh
-      - run: |
-          echo "hoge" >> hoge.txt
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git checkout -b sshkey
-          git add hoge.txt
-          git commit -m "update hoge.txt"
-          git push origin sshkey
+#       - run: |
+#           echo "hoge" >> hoge.txt
+#           git config user.name "github-actions[bot]"
+#           git config user.email "github-actions[bot]@users.noreply.github.com"
+#           git checkout -b sshkey
+#           git add hoge.txt
+#           git commit -m "update hoge.txt"
+#           git push origin sshkey
 
       - name: Dump GitHub context
         env:
