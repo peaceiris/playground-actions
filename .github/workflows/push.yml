@@ -55,44 +55,31 @@ jobs:
     env:
       DOCKER_BASE_NAME: docker.pkg.github.com/${{ github.repository }}/playground
     steps:
+      - uses: actions/checkout@v2
 
-    - uses: actions/checkout@v2
+      - name: Set env
+        run: |
+          echo "::set-env name=PKG_TAG::${DOCKER_BASE_NAME}:latest"
 
-    - name: Set env
-      run: |
-        echo "::set-env name=PKG_TAG::${DOCKER_BASE_NAME}:latest"
+      - name: Build image
+        run: |
+          docker build . --file Dockerfile --tag "${PKG_TAG}"
 
-    - name: Build image
-      run: |
-        docker build . --file Dockerfile --tag "${PKG_TAG}"
+      - name: Test
+        run: |
+          docker run --rm "${PKG_TAG}"
 
-    - name: Test
-      run: |
-        docker run --rm "${PKG_TAG}"
+      - name: Login to Package Registry
+        if: github.ref == 'refs/heads/master'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "${GITHUB_TOKEN}" | docker login docker.pkg.github.com -u peaceiris --password-stdin
 
-    # - name: Scan image
-    #   run: |
-    #     # export TRIVY_TAG=$(curl -s https://api.github.com/repos/aquasecurity/trivy/releases/latest | jq -r ".tag_name" | cut -d 'v' -f 2)
-    #     # wget https://github.com/aquasecurity/trivy/releases/download/v${TRIVY_TAG}/trivy_${TRIVY_TAG}_Linux-64bit.tar.gz
-    #     # tar -zxvf trivy_${TRIVY_TAG}_Linux-64bit.tar.gz
-    #     # ./trivy --exit-code 1 "${PKG_TAG}"
-    #     docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \
-    #       -v ${HOME}/.cache:/root/.cache aquasec/trivy:latest --exit-code 1 "${PKG_TAG}"
-
-    # - run: sudo du -sh ${HOME}/.cache/trivy
-
-    - name: Login to Package Registry
-      if: github.ref == 'refs/heads/master'
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |
-        echo "${GITHUB_TOKEN}" | docker login docker.pkg.github.com -u peaceiris --password-stdin
-
-    - name: Push latest
-      if: github.ref == 'refs/heads/master'
-      run: |
-        docker push "${PKG_TAG}"
+      - name: Push latest
+        if: github.ref == 'refs/heads/master'
+        run: |
+          docker push "${PKG_TAG}"
 
 #    - name: Hello from GitHub Package Registry
 #      uses: docker://docker.pkg.github.com/peaceiris/playground-actions/latest:latest
-
