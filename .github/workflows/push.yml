@@ -16,9 +16,9 @@ jobs:
     strategy:
       matrix:
         os:
-          - 'ubuntu-18.04'
+          #- 'ubuntu-18.04'
           #- 'macos-latest'
-          #- 'windows-latest'
+          - 'windows-latest'
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2  # master
@@ -48,6 +48,7 @@ jobs:
       - run: git --version
       - run: ssh -V
       - run: openssl version
+      - run: gpg --version
 
   push-latest:
     runs-on: ubuntu-18.04
