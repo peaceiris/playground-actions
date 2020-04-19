@@ -30,25 +30,13 @@ jobs:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         run: echo "${GITHUB_CONTEXT}"
 
-      - run: ls -la ~
-#      - run: ls -la ~/.ssh
-#       - run: |
-#           echo "hoge" >> hoge.txt
-#           git config user.name "github-actions[bot]"
-#           git config user.email "github-actions[bot]@users.noreply.github.com"
-#           git checkout -b sshkey
-#           git add hoge.txt
-#           git commit -m "update hoge.txt"
-#           git push origin sshkey
-
+      - run: gpg --version
       - run: env
-      - run: curl -fsi "https://github.com/${GITHUB_REPOSITORY}/releases/latest" | awk -F/ '/^Location:/ {print $(NF)}'
       # - run: sh -c 'eval "$(ssh-agent)"'
       # - run: Start-Process powershell.exe -Verb runas
       - run: git --version
       - run: ssh -V
       - run: openssl version
-      - run: gpg --version
 
   push-latest:
     runs-on: ubuntu-18.04
