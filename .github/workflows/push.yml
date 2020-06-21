@@ -32,6 +32,8 @@ jobs:
         run: echo "${GITHUB_CONTEXT}"
 
       - run: |
+          git config --local user.name 'github-actions[bot]'
+          git config --local user.email 'github-actions[bot]@users.noreply.github.com'
           echo "hoge" >> README.md
           git commit -am "add hoge"
           git push origin master
