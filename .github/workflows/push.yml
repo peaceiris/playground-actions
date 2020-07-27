@@ -34,7 +34,10 @@ jobs:
           git push origin master
       - run: gpg --version
       - run: env
-      - run: nkf --version
+      - run: |
+          apt update
+          apt install -y nkf
+          nkf --version
       # - run: sh -c 'eval "$(ssh-agent)"'
       # - run: Start-Process powershell.exe -Verb runas
       - run: git --version
