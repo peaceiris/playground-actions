@@ -35,8 +35,8 @@ jobs:
       - run: gpg --version
       - run: env
       - run: |
-          apt update
-          apt install -y nkf
+          sudo apt update
+          sudo apt install -y nkf
           nkf --version
       # - run: sh -c 'eval "$(ssh-agent)"'
       # - run: Start-Process powershell.exe -Verb runas
