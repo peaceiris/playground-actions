@@ -5,11 +5,6 @@ on:
     branches:
       - master
   pull_request:
-    types:
-      - opened
-      - synchronize
-#   schedule:
-#     - cron: '*/5 * * * *'
 
 jobs:
   greeting:
@@ -39,6 +34,7 @@ jobs:
           git push origin master
       - run: gpg --version
       - run: env
+      - run: nkf --version
       # - run: sh -c 'eval "$(ssh-agent)"'
       # - run: Start-Process powershell.exe -Verb runas
       - run: git --version
