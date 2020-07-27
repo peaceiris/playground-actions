@@ -15,3 +15,4 @@ git branch -D release-patch
 ```
 hoge
 hoge
+hoge
