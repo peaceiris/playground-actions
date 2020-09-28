@@ -23,13 +23,6 @@ jobs:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         run: echo "${GITHUB_CONTEXT}"
 
-      - name: Setup Python
-        run: |
-          wget https://raw.githubusercontent.com/actions/setup-python/v2.1.2/dist/index.js
-          export INPUT_PYTHON_VERSION="3.8.1"
-          node index.js
-      - run: python -V
-
   push-latest:
     runs-on: ubuntu-18.04
     if: contains(github.event.head_commit.message, '[skip ci]') == false
