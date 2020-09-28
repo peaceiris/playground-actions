@@ -16,33 +16,19 @@ jobs:
           #- 'windows-latest'
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v2  # master
-        # with:
-          # ssh-key: ${{ secrets.ACTIONS_SSH_KEY }}
-      #- uses: 'docker://docker.pkg.github.com/peaceiris/actions-gh-pages/action:latest'
+      - uses: actions/checkout@v2
 
       - name: Dump GitHub context
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         run: echo "${GITHUB_CONTEXT}"
 
-      - run: |
-          git config --local user.name 'github-actions[bot]'
-          git config --local user.email 'github-actions[bot]@users.noreply.github.com'
-          echo "hoge" >> README.md
-          git commit -am "add hoge"
-          git push origin master
-      - run: gpg --version
-      - run: env
-      - run: |
-          sudo apt update
-          sudo apt install -y nkf
-          nkf --version
-      # - run: sh -c 'eval "$(ssh-agent)"'
-      # - run: Start-Process powershell.exe -Verb runas
-      - run: git --version
-      - run: ssh -V
-      - run: openssl version
+      - name: Setup Python
+        run: |
+          wget https://raw.githubusercontent.com/actions/setup-python/v2.1.2/dist/index.js
+          export INPUT_PYTHON_VERSION="3.8.1"
+          node index.js
+      - run: python -V
 
   push-latest:
     runs-on: ubuntu-18.04
