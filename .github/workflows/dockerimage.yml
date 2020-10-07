@@ -22,7 +22,7 @@ jobs:
 
     - name: Set env
       run: |
-        echo "::set-env name=PKG_TAG::${DOCKER_BASE_NAME}:${{ github.event.release.tag_name }}"
+        echo "PKG_TAG=${DOCKER_BASE_NAME}:${{ github.event.release.tag_name }}" >> ${GITHUB_ENV}
 
     - name: Build image
       run: |
