@@ -22,8 +22,8 @@ jobs:
         run: |
           BRANCH_NAME="${GITHUB_REF#refs/heads/}"
           RELEASE_TYPE="${BRANCH_NAME#release-}"
-          echo "::set-env name=BRANCH_NAME::${BRANCH_NAME}"
-          echo "::set-env name=RELEASE_TYPE::${RELEASE_TYPE}"
+          echo "BRANCH_NAME=${BRANCH_NAME}" >> ${GITHUB_ENV}
+          echo "RELEASE_TYPE=${RELEASE_TYPE}" >> ${GITHUB_ENV}
 
       - name: Read .nvmrc
         run: echo "::set-output name=NVMRC::$(cat .nvmrc)"
@@ -56,7 +56,7 @@ jobs:
           git push origin "${BRANCH_NAME}"
           export TAG_NAME="v$(jq -r '.version' ./package.json)"
           git push origin "${TAG_NAME}"
-          echo "::set-env name=TAG_NAME::${TAG_NAME}"
+          echo "TAG_NAME=${TAG_NAME}" >> ${GITHUB_ENV}
 
       - name: Install hub
         run: |
