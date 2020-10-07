@@ -67,7 +67,7 @@ jobs:
           tar -zxvf "./${HUB_TARBALL}"
           mkdir ~/bin
           cp "./${HUB_NAME}/bin/hub" ~/bin/
-          echo "::add-path::~/bin/"
+          echo "~/bin/" >> ${GITHUB_PATH}
           rm -rf "./${HUB_NAME}" "./${HUB_TARBALL}"
 
       - name: Create release
