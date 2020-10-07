@@ -33,7 +33,7 @@ jobs:
 
       - name: Set env
         run: |
-          echo "::set-env name=PKG_TAG::${DOCKER_BASE_NAME}:latest"
+          echo "PKG_TAG=${DOCKER_BASE_NAME}:latest" >> ${GITHUB_ENV}
 
       - name: Build image
         run: |
