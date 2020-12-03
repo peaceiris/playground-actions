@@ -18,5 +18,7 @@ jobs:
 
       - name: Label Commenter
         uses: peaceiris/actions-label-commenter@v1.8.2
+        env:
+          RUNNER_DEBUG: 1
         # with:
           # config_file: .github/label-commenter-config.yml
