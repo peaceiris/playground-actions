@@ -9,6 +9,10 @@ on:
     types:
       - labeled
       - unlabeled
+  push:
+    branches:
+      - master
+  workflow_dispatch:
 
 jobs:
   comment:
@@ -17,7 +21,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Label Commenter
-        uses: peaceiris/actions-label-commenter@v1.8.2
+        uses: peaceiris/actions-label-commenter@4720992
         env:
           RUNNER_DEBUG: 1
         # with:
