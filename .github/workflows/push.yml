@@ -30,7 +30,7 @@ jobs:
       - name: Set CNAME
         id: cname
         run: |
-          if [ ${{ github.event.repository.fork }} = 'false' ]; then
+          if [ ${{ github.event.repository.fork }} != 'false' ]; then
             echo "::set-output name=cname::peaceiris.com"
           fi
 
