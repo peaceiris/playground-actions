@@ -24,7 +24,7 @@ jobs:
         run: echo "${GITHUB_CONTEXT}"
 
       - name: Skip on fork
-        if: github.event.repository.fork == 'false'
+        if: github.event.repository.fork == false
         run: echo "${{ github.event.repository.fork }}"
 
       - name: Set CNAME
