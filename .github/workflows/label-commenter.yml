@@ -21,8 +21,8 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Label Commenter
-        uses: peaceiris/actions-label-commenter@4720992
-        env:
-          RUNNER_DEBUG: 1
+        uses: peaceiris/actions-label-commenter@b5bad42
+        # env:
+          # RUNNER_DEBUG: 1
         # with:
           # config_file: .github/label-commenter-config.yml
