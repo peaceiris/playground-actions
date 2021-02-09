@@ -38,7 +38,6 @@ jobs:
 
   push-latest:
     runs-on: ubuntu-18.04
-    if: contains(github.event.head_commit.message, '[skip ci]') == false
     env:
       DOCKER_BASE_NAME: docker.pkg.github.com/${{ github.repository }}/playground
     steps:
