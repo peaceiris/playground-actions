@@ -1,0 +1,24 @@
+name: Label Commenter
+
+on:
+  issues:
+    types:
+      - labeled
+      - unlabeled
+  pull_request_target:
+    types:
+      - labeled
+      - unlabeled
+
+jobs:
+  comment:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Label Commenter
+        uses: peaceiris/actions-label-commenter@a49d053780425b3be7b1ec951e34d683b53b8b6a
+        env:
+          RUNNER_DEBUG: 1
+        # with:
+          # config_file: .github/label-commenter-config.yml
