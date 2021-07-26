@@ -10,9 +10,15 @@ on:
       - labeled
       - unlabeled
 
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+
 jobs:
   comment:
     runs-on: ubuntu-20.04
+    timeout-minutes: 1
     steps:
       - uses: actions/checkout@v2
 
