@@ -12,6 +12,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      
+      - name: Set envs
+        run: |
+          echo "GH_WORKFLOW=${GITHUB_WORKFLOW}" >> ${GITHUB_ENV}
+          echo "GH_JOB=${GITHUB_JOB}" >> ${GITHUB_ENV}
+          echo "GH_RUN_NUMBER=${GITHUB_RUN_NUMBER}" >> ${GITHUB_ENV}
 
       - name: Run a one-line script
-        run: echo "${{ env.GITHUB_WORKFLOW }}/${{ env.GITHUB_JOB }}/${{ env.GITHUB_RUN_NUMBER }}"
+        run: echo "${{ env.GH_WORKFLOW }}/${{ env.GH_JOB }}/${{ env.GH_RUN_NUMBER }}"
