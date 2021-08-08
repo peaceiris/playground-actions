@@ -23,7 +23,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Label Commenter
-        uses: peaceiris/actions-label-commenter@e48200a12932708405b69542208de3bb94d49017
+        uses: peaceiris/actions-label-commenter@20587983226995488c809aaddc96672d4955700e
         env:
           RUNNER_DEBUG: 1
         # with:
