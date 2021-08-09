@@ -26,6 +26,6 @@ jobs:
         uses: peaceiris/actions-label-commenter@25e9b6b0474eb7ad6157260a86a8c9c6f771f71d
         env:
           RUNNER_DEBUG: 1
-        with:
-          github_token: ${{ secrets.GH_PAT }}
+#         with:
+#           github_token: ${{ secrets.GH_PAT }}
           # config_file: .github/label-commenter-config.yml
