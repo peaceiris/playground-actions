@@ -23,9 +23,9 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Label Commenter
-        uses: peaceiris/actions-label-commenter@25e9b6b0474eb7ad6157260a86a8c9c6f771f71d
+        uses: peaceiris/actions-label-commenter@b785a39e04f3fa0d1f15523947c9cc9605be634d
         env:
           RUNNER_DEBUG: 1
-        with:
-          github_token: ${{ secrets.GH_PAT }}
-          # config_file: .github/label-commenter-config.yml
+#         with:
+#           github_token: ${{ secrets.GH_PAT }}
+#           config_file: .github/label-commenter-config.yml
