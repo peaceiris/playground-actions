@@ -14,10 +14,10 @@ on:
       - labeled
       - unlabeled
 
-permissions:
-  contents: read
-  issues: write
-  pull-requests: write
+# permissions:
+#   contents: read
+#   issues: write
+#   pull-requests: write
 
 jobs:
   comment:
@@ -30,6 +30,6 @@ jobs:
         uses: peaceiris/actions-label-commenter@3dcfc91b6291a15f1d409417f392aeea6db1a4fb
         env:
           RUNNER_DEBUG: 1
-        with:
-          github_token: ${{ secrets.GH_PAT }}
+#         with:
+#           github_token: ${{ secrets.GH_PAT }}
 #           config_file: .github/label-commenter-config.yml
