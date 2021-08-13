@@ -13,7 +13,7 @@ labels:
         body: Please follow the issue templates.
         action: close
       pr:
-        body: Thank you @{{ pull_request.user.login }} for suggesting this. Please follow the pull request templates.
+        body: Thank you @{{ author }} for suggesting this. Please follow the pull request templates.
         action: close
         draft: true
     unlabeled:
@@ -48,14 +48,14 @@ labels:
   - name: proposal
     labeled:
       issue:
-        body: Thank you @{{ issue.user.login }} for suggesting this.
+        body: &proposal_body Thank you @{{ author }} for suggesting this.
       discussion:
-        body: Thank you @{{ discussion.user.login }} for suggesting this.
+        body: *proposal_body
   - name: locked (spam)
     labeled:
       issue:
         body: &locked_spam_body |
-          This issue has been **LOCKED** because of spam!
+          This @{{ eventName }} #@{{ number }} has been **LOCKED** because of @{{ labelName }}!
 
           Please do not spam messages on this project. You may get blocked from this repository for doing so.
         action: close
