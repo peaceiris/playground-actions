@@ -49,6 +49,8 @@ labels:
     labeled:
       issue:
         body: Thank you @{{ issue.user.login }} for suggesting this.
+      discussion:
+        body: Thank you @{{ discussion.user.login }} for suggesting this.
   - name: locked (spam)
     labeled:
       issue:
@@ -65,6 +67,13 @@ labels:
 
           Please do not spam messages and/or pull-requests on this project. You may get blocked from this repository for doing so.
         action: close
+        locking: lock
+        lock_reason: spam
+      discussion:
+        body: |
+          This discussion has been **LOCKED** because of spam!
+
+          Please do not spam messages on this project. You may get blocked from this repository for doing so.
         locking: lock
         lock_reason: spam
   - name: locked (heated)
@@ -84,6 +93,13 @@ labels:
         locking: lock
         lock_reason: too heated
         draft: true
+      discussion:
+        body: |
+          This discussion has been **LOCKED** because of heated conversation!
+
+          We appreciate exciting conversations, as long as they won't become too aggressive and/or emotional.
+        locking: lock
+        lock_reason: too heated
     unlabeled:
       issue:
         body: |
@@ -94,6 +110,10 @@ labels:
           This pull-request has been unlocked now.
         locking: unlock
         draft: false
+      discussion:
+        body: |
+          This discussion has been unlocked now.
+        locking: unlock
   - name: locked (off-topic)
     labeled:
       issue:
