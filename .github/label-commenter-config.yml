@@ -55,7 +55,7 @@ labels:
     labeled:
       issue:
         body: &locked_spam_body |
-          This {{ eventName }} \#{{ number }} has been **LOCKED** because of {{ labelName }}!
+          This {{ eventName }} \#{{ number }} has been **LOCKED** with the label {{ labelName }}!
 
           Please do not spam messages on this project. You may get blocked from this repository for doing so.
         action: close
