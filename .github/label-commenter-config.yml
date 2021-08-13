@@ -70,6 +70,7 @@ labels:
         body: *locked_spam_body
         locking: lock
         lock_reason: spam
+        answer: true
   - name: locked (heated)
     labeled:
       issue:
