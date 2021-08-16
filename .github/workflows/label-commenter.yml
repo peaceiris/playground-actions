@@ -25,7 +25,7 @@ jobs:
     timeout-minutes: 1
     steps:
       - name: Label Commenter
-        uses: peaceiris/actions-label-commenter@80873ca95d27275cf2ee8f36d459dbb6be6c4c50
+        uses: peaceiris/actions-label-commenter@084287e609b6b7e2ad3345159c31d0752fc9a4e0
         env:
           RUNNER_DEBUG: 1
         with:
