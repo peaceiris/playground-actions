@@ -66,6 +66,7 @@ labels:
         action: close
         locking: lock
         lock_reason: spam
+        draft: true
       discussion:
         body: *locked_spam_body
         locking: lock
