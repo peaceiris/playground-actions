@@ -2,18 +2,18 @@ comment:
   header: Hi, there.
   footer: "\
     ---\n\n\
-    > This is an automated comment created by the [peaceiris/actions-label-commenter]. \
+    > This is an automated comment created by the [{{ owner }}/{{ repo }}]. \
     Responding to the bot or mentioning it won't have any effect.\n\n\
-    [peaceiris/actions-label-commenter]: https://github.com/peaceiris/actions-label-commenter"
+    [{{ owner }}/{{ repo }}]: https://github.com/{{ owner }}/{{ repo }}"
 
 labels:
   - name: invalid
     labeled:
       issue:
-        body: Please follow the issue templates.
+        body: Please follow the {{ eventName }} templates.
         action: close
       pr:
-        body: Thank you @{{ author }} for suggesting this. Please follow the pull request templates.
+        body: Thank you @{{ author }} for suggesting this. Please follow the {{ eventName }} templates.
         action: close
         draft: true
     unlabeled:
@@ -39,12 +39,12 @@ labels:
   - name: duplicate
     labeled:
       issue:
-        body: This issue already exists.
+        body: This {{ eventName }} already exists.
         action: close
   - name: good first issue
     labeled:
       issue:
-        body: This issue is easy for contributing. Everyone can work on this.
+        body: This {{ eventName }} is easy for contributing. Everyone can work on this.
   - name: proposal
     labeled:
       issue:
@@ -74,46 +74,37 @@ labels:
   - name: locked (heated)
     labeled:
       issue:
-        body: |
-          This issue has been **LOCKED** because of heated conversation!
+        body: &locked_heated_labeled_body |
+          This {{ eventName }} has been **LOCKED** because of heated conversation!
 
           We appreciate exciting conversations, as long as they won't become too aggressive and/or emotional.
         locking: lock
         lock_reason: too heated
       pr:
-        body: |
-          This pull-request has been **LOCKED** because of heated conversation!
-
-          We appreciate exciting conversations, as long as they won't become too aggressive and/or emotional.
+        body: *locked_heated_labeled_body
         locking: lock
         lock_reason: too heated
         draft: true
       discussion:
-        body: |
-          This discussion has been **LOCKED** because of heated conversation!
-
-          We appreciate exciting conversations, as long as they won't become too aggressive and/or emotional.
+        body: *locked_heated_labeled_body
         locking: lock
         lock_reason: too heated
     unlabeled:
       issue:
-        body: |
-          This issue has been unlocked now.
+        body: &locked_heated_unlabeled_body This {{ eventName }} has been unlocked now.
         locking: unlock
       pr:
-        body: |
-          This pull-request has been unlocked now.
+        body: *locked_heated_unlabeled_body
         locking: unlock
         draft: false
       discussion:
-        body: |
-          This discussion has been unlocked now.
+        body: *locked_heated_unlabeled_body
         locking: unlock
   - name: locked (off-topic)
     labeled:
       issue:
         body: |
-          This issue has been **LOCKED** because of off-topic conversations!
+          This {{ eventName }} has been **LOCKED** because of off-topic conversations!
 
           Please use our other means of communication for casual chats.
         action: close
@@ -123,10 +114,10 @@ labels:
     labeled:
       issue:
         body: |
-          This issue has been **LOCKED** because of it being resolved!
+          This {{ eventName }} has been **LOCKED** because of it being resolved!
 
-          The issue has been fixed and is therefore considered resolved.
-          If you still encounter this or it has changed, open a new issue instead of responding to solved ones.
+          The {{ eventName }} has been fixed and is therefore considered resolved.
+          If you still encounter this or it has changed, open a new {{ eventName }} instead of responding to solved ones.
         action: close
         locking: lock
         lock_reason: resolved
