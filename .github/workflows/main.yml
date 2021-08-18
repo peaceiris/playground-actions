@@ -13,7 +13,10 @@ jobs:
     timeout-minutes: 1
     steps:
       - uses: actions/checkout@v2
-      
+
+      - run: pwd
+      - run: env
+
       - name: Set envs
         run: |
           echo "GH_WORKFLOW=${GITHUB_WORKFLOW}" >> ${GITHUB_ENV}
