@@ -18,6 +18,7 @@ jobs:
       - run: docker version
       - run: docker buildx create --use --driver docker-container
       - run: docker buildx ls
+      - run: docker buildx inspect --bootstrap
 
       - name: Set envs
         run: |
