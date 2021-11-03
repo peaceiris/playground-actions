@@ -14,7 +14,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: docker/setup-qemu-action@v1
+      - name: Setup qemu
+        run: |
+          docker pull tonistiigi/binfmt:latest
+          docker image inspect tonistiigi/binfmt:latest
+          docker run --rm --privileged tonistiigi/binfmt:latest --install all
       - run: docker version
       - run: docker buildx create --use --driver docker-container
       - run: docker buildx ls
