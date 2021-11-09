@@ -30,5 +30,11 @@ jobs:
           echo "GH_JOB=${GITHUB_JOB}" >> ${GITHUB_ENV}
           echo "GH_RUN_NUMBER=${GITHUB_RUN_NUMBER}" >> ${GITHUB_ENV}
 
+      - name: Dump envs
+        run: |
+          echo $GITHUB_REF_NAME
+          echo $GITHUB_REF_PROTECTED
+          echo $GITHUB_REF_TYPE
+
       - name: Run a one-line script
         run: echo "${{ env.GH_WORKFLOW }}/${{ env.GH_JOB }}/${{ env.GH_RUN_NUMBER }}"
