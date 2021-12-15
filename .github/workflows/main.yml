@@ -24,6 +24,8 @@ jobs:
       - run: docker buildx ls
       - run: docker buildx inspect --bootstrap
 
+      - run: trivy image "docker.elastic.co/elasticsearch/elasticsearch:7.16.1"
+
       - name: Set envs
         run: |
           echo "GH_WORKFLOW=${GITHUB_WORKFLOW}" >> ${GITHUB_ENV}
