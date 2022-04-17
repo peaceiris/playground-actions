@@ -21,3 +21,4 @@ jobs:
           cat << EOF
           ${{ github.event_name }}
           ${{ github.event_name == 'schedule' }}
+          EOF
