@@ -20,4 +20,4 @@ jobs:
         run: |
           cat << EOF
           ${{ github.event_name }}
-          ${{ github.event_name = 'schedule' }}
+          ${{ github.event_name == 'schedule' }}
