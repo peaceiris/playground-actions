@@ -6,37 +6,18 @@ on:
   pull_request:
     branches: [ main ]
   workflow_dispatch:
+  schedule:
+    - cron: "*/5 * * * *"
 
 jobs:
   build:
     runs-on: ubuntu-20.04
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
-      - name: Setup qemu
+      - name: Run
         run: |
-          docker pull tonistiigi/binfmt:latest
-          docker image inspect tonistiigi/binfmt:latest
-          docker run --rm --privileged tonistiigi/binfmt:latest --install all
-      - run: docker version
-      - run: docker buildx create --use --driver docker-container
-      - run: docker buildx ls
-      - run: docker buildx inspect --bootstrap
-
-      - run: trivy image "docker.elastic.co/elasticsearch/elasticsearch:7.16.1"
-
-      - name: Set envs
-        run: |
-          echo "GH_WORKFLOW=${GITHUB_WORKFLOW}" >> ${GITHUB_ENV}
-          echo "GH_JOB=${GITHUB_JOB}" >> ${GITHUB_ENV}
-          echo "GH_RUN_NUMBER=${GITHUB_RUN_NUMBER}" >> ${GITHUB_ENV}
-
-      - name: Dump envs
-        run: |
-          echo $GITHUB_REF_NAME
-          echo $GITHUB_REF_PROTECTED
-          echo $GITHUB_REF_TYPE
-
-      - name: Run a one-line script
-        run: echo "${{ env.GH_WORKFLOW }}/${{ env.GH_JOB }}/${{ env.GH_RUN_NUMBER }}"
+          cat << EOF
+          ${{ github.event_name }}
+          ${{ github.event_name = 'schedule' }}
