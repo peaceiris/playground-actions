@@ -35,6 +35,8 @@ jobs:
       - uses: peaceiris/workflows/setup-git@v0.14.1
 
       - name: workflow_dispatch
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           echo ${GITHUB_REF_NAME}
           echo "${{ github.event.inputs.semver_type }}"
