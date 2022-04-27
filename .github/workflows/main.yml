@@ -48,8 +48,10 @@ jobs:
           RELEASE_TITLE="Release ${NEW_TAG}"
           git tag -a ${NEW_TAG} -m "${RELEASE_TITLE}"
           docker run --rm -v "${PWD}":/workdir quay.io/git-chglog/git-chglog -o CHANGELOG.md
+          git tag -d ${NEW_TAG}
           git add ./CHANGELOG.md
           git commit -m "${RELEASE_TITLE}"
+          git tag -a ${NEW_TAG} -m "${RELEASE_TITLE}"
           git push origin main
           git push origin ${NEW_TAG}
           echo "See [CHANGELOG.md](https://github.com/${GITHUB_REPOSITORY}/blob/${NEW_TAG}/CHANGELOG.md) for more details." > ./release_notes.md
