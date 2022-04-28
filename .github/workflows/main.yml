@@ -10,10 +10,12 @@ on:
       semver_type:
         description: 'Semver type'
         required: true
+        type: choice
         options:
           - patch
           - minor
           - major
+        default: patch
 #   schedule:
 #     - cron: "*/5 * * * *"
 
