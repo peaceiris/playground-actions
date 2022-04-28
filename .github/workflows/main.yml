@@ -14,7 +14,6 @@ on:
           - patch
           - minor
           - major
-        default: patch
 #   schedule:
 #     - cron: "*/5 * * * *"
 
