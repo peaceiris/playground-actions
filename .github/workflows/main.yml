@@ -31,7 +31,9 @@ jobs:
           fetch-depth: 0
 
       - name: Dump GitHub context
-        run: echo "${{ toJson(github) }}"
+        env:
+          GH_CXT: ${{ toJson(github) }}
+        run: echo "${GH_CXT}"
 
       - name: Run
         run: |
