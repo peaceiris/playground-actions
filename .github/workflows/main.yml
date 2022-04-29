@@ -1,21 +1,23 @@
 name: CI
 
 on:
-#   push:
-#     branches: [ main ]
-#   pull_request:
-#     branches: [ main ]
+  push:
+    branches:
+      - "main"
+  pull_request:
+    branches:
+      - "main"
   workflow_dispatch:
     inputs:
       semver_type:
-        description: 'Semver type'
+        description: "Semver type"
         required: true
-        type: choice
+        type: "choice"
         options:
-          - patch
-          - minor
-          - major
-        default: patch
+          - "patch"
+          - "minor"
+          - "major"
+        default: "patch"
 #   schedule:
 #     - cron: "*/5 * * * *"
 
@@ -28,6 +30,9 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Dump GitHub context
+        run: echo "${{ toJson(github) }}"
+
       - name: Run
         run: |
           cat << EOF
@@ -38,6 +43,7 @@ jobs:
       - uses: peaceiris/workflows/setup-git@v0.14.1
 
       - name: workflow_dispatch
+        if: ${{ github.event_name == 'workflow_dispatch' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
