@@ -42,15 +42,16 @@ jobs:
           ${{ github.event_name == 'schedule' }}
           EOF
           
-          JSON=$(cat << EOF
+          JSON=$(mktemp)
+          cat << EOF
           {
             "target_services": "${UPDATED_SERVICES}",
             "new_version": "${NEW_VERSION}",
             "assignee_name": "${ASSIGNEE_NAME}",
             "origin_url": "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
           }
-          EOF
-          )
+          EOF > ${JSON}
+          cat ${JSON}
           echo "$(cat ${JSON} | jq -c .)"
 
       - uses: peaceiris/workflows/setup-git@v0.14.1
