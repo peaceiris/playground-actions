@@ -43,14 +43,14 @@ jobs:
           EOF
           
           JSON=$(mktemp)
-          cat << EOF
+          cat << EOF > ${JSON}
           {
             "target_services": "${UPDATED_SERVICES}",
             "new_version": "${NEW_VERSION}",
             "assignee_name": "${ASSIGNEE_NAME}",
             "origin_url": "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
           }
-          EOF > ${JSON}
+          EOF
           cat ${JSON}
           echo "$(cat ${JSON} | jq -c .)"
 
