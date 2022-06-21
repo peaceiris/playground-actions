@@ -35,6 +35,11 @@ jobs:
           GH_CXT: ${{ toJson(github) }}
         run: echo "${GH_CXT}"
 
+      - name: List Issues
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh issue list
+
       - name: Run
         run: |
           cat << EOF
