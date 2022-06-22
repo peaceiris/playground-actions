@@ -23,7 +23,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-20.04
+    runs-on: macos-latest
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v3
@@ -34,6 +34,8 @@ jobs:
         env:
           GH_CXT: ${{ toJson(github) }}
         run: echo "${GH_CXT}"
+
+      - run: uname -m
 
       - name: List Issues
         env:
