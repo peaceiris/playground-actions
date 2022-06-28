@@ -1,0 +1,53 @@
+name: CI
+
+on:
+  workflow_dispatch:
+    inputs:
+      semver_type:
+        description: "Semver type"
+        required: true
+        type: "choice"
+        options:
+          - "patch"
+          - "minor"
+          - "major"
+        default: "patch"
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Dump GitHub context
+        env:
+          GH_CXT: ${{ toJson(github) }}
+        run: echo "${GH_CXT}"
+
+      - name: Run
+        run: |
+          cat << EOF
+          ${{ github.event_name }}
+          ${{ github.event_name == 'schedule' }}
+          EOF
+
+      - uses: peaceiris/workflows/setup-git@v0.14.1
+
+      - name: workflow_dispatch
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo ${GITHUB_REF_NAME}
+          echo "${{ github.event.inputs.semver_type }}"
+          CURRENT_TAG=$(git describe --abbrev=0)
+          NEW_VERSION=$(npm_config_yes=true npx semver ${CURRENT_TAG} --increment ${{ github.event.inputs.semver_type }})
+          NEW_TAG="v${NEW_VERSION}"
+          RELEASE_TITLE="Release ${NEW_TAG}"
+          git tag -a ${NEW_TAG} -m "${RELEASE_TITLE}"
+          git push origin main
+          git push origin ${NEW_TAG}
+          echo "See [CHANGELOG](https://github.com/peaceiris/playground-actions/compare/${CURRENT_TAG}...${NEW_TAG}) for more details." > ./release_notes.md
+          gh release create "${NEW_TAG}" --title "${RELEASE_TITLE}" --notes-file ./release_notes.md
