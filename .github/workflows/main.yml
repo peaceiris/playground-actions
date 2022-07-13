@@ -7,19 +7,6 @@ on:
   pull_request:
     branches:
       - "main"
-  workflow_dispatch:
-    inputs:
-      semver_type:
-        description: "Semver type"
-        required: true
-        type: "choice"
-        options:
-          - "patch"
-          - "minor"
-          - "major"
-        default: "patch"
-#   schedule:
-#     - cron: "*/5 * * * *"
 
 jobs:
   build:
@@ -41,41 +28,3 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: gh issue list
-
-      - name: Run
-        run: |
-          cat << EOF
-          ${{ github.event_name }}
-          ${{ github.event_name == 'schedule' }}
-          EOF
-          
-          JSON=$(mktemp)
-          cat << EOF > ${JSON}
-          {
-            "target_services": "${UPDATED_SERVICES}",
-            "new_version": "${NEW_VERSION}",
-            "assignee_name": "${ASSIGNEE_NAME}",
-            "origin_url": "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
-          }
-          EOF
-          cat ${JSON}
-          echo "$(cat ${JSON} | jq -c .)"
-
-      - uses: peaceiris/workflows/setup-git@v0.14.1
-
-      - name: workflow_dispatch
-        if: ${{ github.event_name == 'workflow_dispatch' }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          echo ${GITHUB_REF_NAME}
-          echo "${{ github.event.inputs.semver_type }}"
-          CURRENT_TAG=$(git describe --abbrev=0)
-          NEW_VERSION=$(npm_config_yes=true npx semver ${CURRENT_TAG} --increment ${{ github.event.inputs.semver_type }})
-          NEW_TAG="v${NEW_VERSION}"
-          RELEASE_TITLE="Release ${NEW_TAG}"
-          git tag -a ${NEW_TAG} -m "${RELEASE_TITLE}"
-          git push origin main
-          git push origin ${NEW_TAG}
-          echo "See [CHANGELOG](https://github.com/peaceiris/playground-actions/compare/${CURRENT_TAG}...${NEW_TAG}) for more details." > ./release_notes.md
-          gh release create "${NEW_TAG}" --title "${RELEASE_TITLE}" --notes-file ./release_notes.md
