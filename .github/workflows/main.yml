@@ -61,7 +61,7 @@ jobs:
           cat ${JSON}
           echo "$(cat ${JSON} | jq -c .)"
 
-      - uses: peaceiris/workflows/setup-git@v0.14.1
+      - uses: peaceiris/workflows/setup-git@v0.16.0
 
       - name: workflow_dispatch
         if: ${{ github.event_name == 'workflow_dispatch' }}
