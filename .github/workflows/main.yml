@@ -35,7 +35,10 @@ jobs:
           GH_CXT: ${{ toJson(github) }}
         run: echo "${GH_CXT}"
 
-      - run: uname -m
+      - name: context
+        run: |
+          echo ${{ github.ref_name }}
+          echo ${GITHUB_REF_NAME}
 
       - name: List Issues
         env:
