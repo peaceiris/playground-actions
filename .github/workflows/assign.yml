@@ -1,0 +1,21 @@
+name: Pull-request Assigner
+
+on:
+  pull_request:
+    types:
+      - opened
+
+jobs:
+  assign:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 1
+    permissions:
+      pull-requests: write
+    steps:
+      - run: gh pr edit "${PR_NUMBER}" --add-assignee "${PR_ASSIGNEE}"
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          PR_ASSIGNEE: ${{ github.event.pull_request.user.login }}
+        if: ${{ toJSON(github.event.pull_request.assignees) == '[]' }}
