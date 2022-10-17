@@ -34,7 +34,7 @@ jobs:
           ${{ github.event_name == 'schedule' }}
           EOF
 
-      - uses: peaceiris/workflows/setup-git@v0.16.0
+      - uses: peaceiris/workflows/setup-git@v0.17.1
 
       - name: workflow_dispatch
         env:
