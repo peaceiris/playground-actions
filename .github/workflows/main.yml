@@ -37,4 +37,4 @@ jobs:
           echo $HOGE
           echo $PIYO
         env:
-          PIYO: $FUGA
+          PIYO: ${{ env.FUGA }}
