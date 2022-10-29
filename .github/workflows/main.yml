@@ -22,64 +22,19 @@ on:
 #     - cron: "*/5 * * * *"
 
 jobs:
-  build:
+  main:
     runs-on: ubuntu-latest
     timeout-minutes: 5
+    permissions: {}
+    env:
+      HOGE: hoge
     steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-
-      - name: Dump GitHub context
-        env:
-          GH_CXT: ${{ toJson(github) }}
-        run: echo "${GH_CXT}"
-
-      - name: context
+      - name: set FUGA
         run: |
-          echo ${{ github.ref_name }}
-          echo ${GITHUB_REF_NAME}
-
-      - name: List Issues
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh issue list
-
-      - name: Run
+          echo 'FUGA=fuga' | tee -a "${GITHUB_ENV}"
+      - name: echo test
         run: |
-          cat << EOF
-          ${{ github.event_name }}
-          ${{ github.event_name == 'schedule' }}
-          EOF
-          
-          JSON=$(mktemp)
-          cat << EOF > ${JSON}
-          {
-            "target_services": "${UPDATED_SERVICES}",
-            "new_version": "${NEW_VERSION}",
-            "assignee_name": "${ASSIGNEE_NAME}",
-            "origin_url": "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
-          }
-          EOF
-          cat ${JSON}
-          echo "$(cat ${JSON} | jq -c .)"
-
-      # https://github.com/peaceiris/workflows/blob/main/setup-git/action.yml
-      - uses: peaceiris/workflows/setup-git@v0.16.0
-
-      - name: workflow_dispatch
-        if: ${{ github.event_name == 'workflow_dispatch' }}
+          echo $HOGE
+          echo $PIYO
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          echo ${GITHUB_REF_NAME}
-          echo "${{ github.event.inputs.semver_type }}"
-          CURRENT_TAG=$(git describe --abbrev=0)
-          NEW_VERSION=$(npm_config_yes=true npx semver ${CURRENT_TAG} --increment ${{ github.event.inputs.semver_type }})
-          NEW_TAG="v${NEW_VERSION}"
-          RELEASE_TITLE="Release ${NEW_TAG}"
-          git tag -a ${NEW_TAG} -m "${RELEASE_TITLE}"
-          git push origin main
-          git push origin ${NEW_TAG}
-          echo "See [CHANGELOG](https://github.com/peaceiris/playground-actions/compare/${CURRENT_TAG}...${NEW_TAG}) for more details." > ./release_notes.md
-          gh release create "${NEW_TAG}" --title "${RELEASE_TITLE}" --notes-file ./release_notes.md
+          PIYO: $FUGA
