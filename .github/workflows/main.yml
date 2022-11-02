@@ -24,7 +24,7 @@ jobs:
     steps:
       - name: "Setup environments"
         run: |
-          TMP_FILE=$(mktemp)"
+          TMP_FILE="$(mktemp)"
           if [ "${{ github.event_name == 'push' || inputs.environment == 'development' }}" = "true" ]; then
             {
               echo "environment=development"
