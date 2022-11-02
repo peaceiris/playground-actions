@@ -25,13 +25,13 @@ jobs:
       - name: "Setup environments"
         run: |
           TMP_FILE=$(mktemp)        
-          if [ ${{ github.event_name == 'push' || inputs.environment == 'development' }} ]; then
-            cat <<- EOF | tee -a "${TMP_FILE}"
+          if [ "${{ github.event_name == 'push' || inputs.environment == 'development' }}" = "true" ]; then
+            cat <<- 'EOF' | tee -a "${TMP_FILE}"
             environment=development
             EOF
           fi
-          if [ ${{ inputs.environment == 'production' }} ]; then
-            cat <<- EOF | tee -a "${TMP_FILE}"
+          if [ "${{ inputs.environment == 'production' }}" = "true" ]; then
+            cat <<- 'EOF' | tee -a "${TMP_FILE}"
             environment=production
             EOF
           fi
