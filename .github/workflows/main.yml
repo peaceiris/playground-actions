@@ -1,40 +1,48 @@
 name: CI
 
 on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: Environment
+        default: development
+        required: true
+        type: choice
+        options:
+          - development
+          - production
   push:
     branches:
       - "main"
-  pull_request:
-    branches:
-      - "main"
-  workflow_dispatch:
-    inputs:
-      semver_type:
-        description: "Semver type"
-        required: true
-        type: "choice"
-        options:
-          - "patch"
-          - "minor"
-          - "major"
-        default: "patch"
-#   schedule:
-#     - cron: "*/5 * * * *"
 
 jobs:
-  main:
-    runs-on: ubuntu-latest
+  prepare:
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: read
     timeout-minutes: 5
-    permissions: {}
-    env:
-      HOGE: hoge
     steps:
-      - name: set FUGA
+      - name: "Setup environments"
         run: |
-          echo 'FUGA=fuga' | tee -a "${GITHUB_ENV}"
-      - name: echo test
-        run: |
-          echo $HOGE
-          echo $PIYO
-        env:
-          PIYO: ${{ env.FUGA }}
+          TMP_FILE=$(mktemp)        
+          if [ "${{ github.event_name == 'push' || inputs.environment == 'development' }}" ]; then
+            {
+              echo "environment=development"
+            } | tee -a "${TMP_FILE}"
+          fi
+          if [ "${{ inputs.environment == 'production' }}" ]; then
+            {
+              echo "environment=production"
+            } | tee -a "${TMP_FILE}"
+          fi
+          echo "${TMP_FILE}" >> "${GITHUB_ENV}"
+
+  release:
+    needs: prepare
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: read
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8 # https://github.com/actions/checkout/releases/tag/v3.1.0
+      - run: echo ${{ env.environment }}
