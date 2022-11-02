@@ -35,7 +35,7 @@ jobs:
               echo "environment=production"
             } | tee -a "${TMP_FILE}"
           fi
-          echo "${TMP_FILE}" >> "${GITHUB_ENV}"
+          cat "${TMP_FILE}" >> "${GITHUB_ENV}"
 
   release:
     needs: prepare
