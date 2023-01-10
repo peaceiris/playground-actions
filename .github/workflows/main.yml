@@ -14,6 +14,7 @@ on:
   push:
     branches:
       - "main"
+  pull_request:
 
 jobs:
   prepare:
@@ -22,18 +23,17 @@ jobs:
       contents: read
     timeout-minutes: 5
     steps:
-      - name: "Setup environments"
+      - uses: actions/checkout@755da8c3cf115ac066823e79a1e1788f8940201b # v3.2.0
+        with:
+          fetch-depth: 0
+
+      - run: |
+          cat << OBJECT
+          echo ${{ toJson(github) }}
+          OBJECT
+      - run: git --no-pager log
+
+      - name: Fetch base branch
         run: |
-          TMP_FILE="$(mktemp)"
-          if [ "${{ github.event_name == 'push' || inputs.environment == 'development' }}" = "true" ]; then
-            {
-              echo "environment=development"
-            } | tee -a "${TMP_FILE}"
-          fi
-          if [ "${{ inputs.environment == 'production' }}" = "true" ]; then
-            {
-              echo "environment=production"
-            } | tee -a "${TMP_FILE}"
-          fi
-          cat "${TMP_FILE}" >> "${GITHUB_ENV}"
-      - run: echo ${{ env.environment }}
+          echo ${{ github.event.pull_request.base.sha }}
+          git fetch origin ${{ github.event.pull_request.base.sha }}
