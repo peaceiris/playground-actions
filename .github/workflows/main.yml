@@ -37,3 +37,4 @@ jobs:
           fi
           cat "${TMP_FILE}" >> "${GITHUB_ENV}"
       - run: echo ${{ env.environment }}
+      - run: echo ${{ github.repository }}
