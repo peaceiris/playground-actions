@@ -1,0 +1,22 @@
+name: Merger
+
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  merge:
+    if: ${{ (github.event.issue.pull_request) && (github.event.comment.body == '/merge') }}
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: read
+      pull-requests: write
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # https://github.com/actions/checkout/releases/tag/v3.5.3
+        with:
+          fetch-depth: 0
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "${GITHUB_CONTEXT}"
