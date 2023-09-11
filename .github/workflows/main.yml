@@ -1,16 +1,6 @@
 name: CI
 
 on:
-  workflow_dispatch:
-    inputs:
-      environment:
-        description: Environment
-        default: development
-        required: true
-        type: choice
-        options:
-          - development
-          - production
   push:
     branches:
       - "main"
@@ -22,20 +12,6 @@ jobs:
       contents: read
     timeout-minutes: 5
     steps:
-      - name: "Setup environments"
+      - name: Dump
         run: |
-          TMP_FILE="$(mktemp)"
-          if [ "${{ github.event_name == 'push' || inputs.environment == 'development' }}" = "true" ]; then
-            {
-              echo "environment=development"
-            } | tee -a "${TMP_FILE}"
-          fi
-          if [ "${{ inputs.environment == 'production' }}" = "true" ]; then
-            {
-              echo "environment=production"
-            } | tee -a "${TMP_FILE}"
-          fi
-          cat "${TMP_FILE}" >> "${GITHUB_ENV}"
-      - run: echo ${{ env.environment }}
-      - run: echo ${{ github.repository }}
-      - run: which -a gh
+          docker images
