@@ -17,3 +17,9 @@ jobs:
         env:
           GH_CXT: ${{ toJson(github) }}
         run: echo "${GH_CXT}"
+      - name: clone
+        run: |
+          pwd
+          git clone https://github.com/peaceiris/playground-actions.git
+          cd playground-actions
+          pwd
