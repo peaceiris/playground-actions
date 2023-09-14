@@ -4,14 +4,16 @@ on:
   push:
     branches:
       - "main"
+  issue_comment:
+    types: [created]
 
 jobs:
   prepare:
     runs-on: ubuntu-22.04
-    permissions:
-      contents: read
+    permissions: {}
     timeout-minutes: 5
     steps:
-      - name: Dump
-        run: |
-          docker images
+      - name: Dump GitHub context
+        env:
+          GH_CXT: ${{ toJson(github) }}
+        run: echo "${GH_CXT}"
