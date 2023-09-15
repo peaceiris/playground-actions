@@ -13,6 +13,8 @@ jobs:
     permissions:
       contents: read
     timeout-minutes: 5
+    container:
+      image: golang:1.20.8
     steps:
       - uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac # https://github.com/actions/checkout/releases/tag/v3.6.0
         with:
@@ -21,6 +23,13 @@ jobs:
         env:
           GH_CXT: ${{ toJson(github) }}
         run: echo "${GH_CXT}"
+      - name: Install gh
+        run: |
+          apt-get update && apt-get install curl -y
+          curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
+          chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg
+          echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | tee /etc/apt/sources.list.d/github-cli.list > /dev/null
+          apt-get update && apt-get install gh -y
       - run: gh pr checkout "${{ github.event.issue.number }}"
         env:
           GH_TOKEN: ${{ github.token }}
