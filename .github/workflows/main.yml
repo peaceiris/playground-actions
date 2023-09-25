@@ -38,4 +38,4 @@ jobs:
         env:
           GH_CTX: ${{ toJson(github) }}
         run: echo "${GH_CTX}"
-      - run: sleep 31
+      - run: sleep 32
