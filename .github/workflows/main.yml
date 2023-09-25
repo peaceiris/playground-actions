@@ -8,6 +8,7 @@ on:
 
 jobs:
   build:
+    if: github.event_name == 'pull_request'
     runs-on: ubuntu-22.04
     permissions:
       contents: read
@@ -21,7 +22,7 @@ jobs:
         env:
           GH_CTX: ${{ toJson(github) }}
         run: echo "${GH_CTX}"
-      - run: sleep 60
+      - run: sleep 30
 
   coverage:
     runs-on: ubuntu-22.04
@@ -29,7 +30,7 @@ jobs:
       contents: read
     timeout-minutes: 5
     concurrency:
-      group: ${{ github.workflow }}-${{ github.ref }}-coverage
+      group: ${{ github.event_name == 'push' && ${{ github.workflow }}-${{ github.ref }}-${{ github.run_number }} || ${{ github.workflow }}-${{ github.ref }}-coverage }}
       cancel-in-progress: ${{ github.ref_name != 'main' }}
     steps:
       - uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac # https://github.com/actions/checkout/releases/tag/v3.6.0
@@ -37,4 +38,4 @@ jobs:
         env:
           GH_CTX: ${{ toJson(github) }}
         run: echo "${GH_CTX}"
-      - run: sleep 61
+      - run: sleep 30
