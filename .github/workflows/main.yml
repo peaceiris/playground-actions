@@ -38,4 +38,8 @@ jobs:
         env:
           GH_CTX: ${{ toJson(github) }}
         run: echo "${GH_CTX}"
+      - name: echo
+        run: |
+          echo "${{ github.event_name == 'pull_request' }}"
+          echo "${{ ${{ github.event_name == 'push' }} && ${{ github.workflow }}-${{ github.ref }}-${{ github.run_number }} || ${{ github.workflow }}-${{ github.ref }}-coverage }}"
       - run: sleep 30
