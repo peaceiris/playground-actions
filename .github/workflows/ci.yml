@@ -18,4 +18,4 @@ jobs:
         env:
           GH_CTX: ${{ toJson(github) }}
         run: echo "${GH_CTX}"
-      - run: echo ${{ github.head_ref || "main" }}
+      - run: echo ${{ github.head_ref || 'main' }}
