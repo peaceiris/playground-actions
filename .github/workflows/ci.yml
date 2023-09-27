@@ -32,12 +32,12 @@ jobs:
           echo "actions/checkout.with.ref: ${{ endsWith(github.ref_name, '/merge') && github.head_ref || github.ref_name }}"
       - name: Set envs
         run: |
-          if [[ "${{ github.ref_name }}" = "main" ]]; then
-            echo "GCP_PROJECT_ID=gcp-dev" | tee -a "${GITHUB_ENV}"
-            echo "TAG=latest" | tee -a "${GITHUB_ENV}"
-          else
+          if [[ "${{ startsWith(github.ref 'refs/tags/') }}" = "true" ]]; then
             echo "GCP_PROJECT_ID=gcp-prd" | tee -a "${GITHUB_ENV}"
             echo "TAG=${{ github.ref_name }}" | tee -a "${GITHUB_ENV}"
+          else
+            echo "GCP_PROJECT_ID=gcp-dev" | tee -a "${GITHUB_ENV}"
+            echo "TAG=latest" | tee -a "${GITHUB_ENV}"
           fi
       - name: Dump envs
         run: echo "${GCP_PROJECT_ID} ${TAG}"
