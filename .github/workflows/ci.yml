@@ -25,3 +25,15 @@ jobs:
           echo "head_ref: ${{ github.head_ref || 'main' }}"
           echo "ref_name: ${{ github.ref_name }}"
           echo "ref: ${{ github.ref }}"
+      - name: Set envs
+        run: |
+          if [[ "${{ github.head_ref || 'main' }}" = "main" ]]; then
+            echo "GCP_PROJECT_ID=gcp-dev" | tee -a "${GITHUB_ENV}"
+            echo "TAG=latest" | tee -a "${GITHUB_ENV}"
+          else
+            echo "GCP_PROJECT_ID=gcp-prd" | tee -a "${GITHUB_ENV}"
+            echo "TAG=${{ github.ref_name }}" | tee -a "${GITHUB_ENV}"
+          fi
+      - name: Dump
+        run: |
+          echo "${GCP_PROJECT_ID} ${TAG}"
