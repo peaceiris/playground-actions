@@ -18,7 +18,7 @@ jobs:
       - uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac # https://github.com/actions/checkout/releases/tag/v3.6.0
         with:
           fetch-depth: 0
-          ref: ${{ github.head_ref || 'main' }}
+          ref: ${{ endsWith(github.ref_name, '/merge') && github.head_ref || github.ref_name }}
           persist-credentials: false
       - name: Dump github context
         env:
@@ -26,9 +26,10 @@ jobs:
         run: echo "${GH_CTX}"
       - name: Dump
         run: |
-          echo "head_ref: ${{ github.head_ref || 'main' }}"
-          echo "ref_name: ${{ github.ref_name }}"
-          echo "ref: ${{ github.ref }}"
+          echo "github.head_ref: ${{ github.head_ref || 'main' }}"
+          echo "github.ref_name: ${{ github.ref_name }}"
+          echo "github.ref: ${{ github.ref }}"
+          echo "actions/checkout.with.ref: ${{ endsWith(github.ref_name, '/merge') && github.head_ref || github.ref_name }}"
       - name: Set envs
         run: |
           if [[ "${{ github.head_ref || 'main' }}" = "main" ]]; then
