@@ -16,6 +16,10 @@ jobs:
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac # https://github.com/actions/checkout/releases/tag/v3.6.0
+        with:
+          fetch-depth: 0
+          ref: ${{ github.head_ref || 'main' }}
+          persist-credentials: false
       - name: Dump github context
         env:
           GH_CTX: ${{ toJson(github) }}
@@ -34,6 +38,5 @@ jobs:
             echo "GCP_PROJECT_ID=gcp-prd" | tee -a "${GITHUB_ENV}"
             echo "TAG=${{ github.ref_name }}" | tee -a "${GITHUB_ENV}"
           fi
-      - name: Dump
-        run: |
-          echo "${GCP_PROJECT_ID} ${TAG}"
+      - name: Dump envs
+        run: echo "${GCP_PROJECT_ID} ${TAG}"
