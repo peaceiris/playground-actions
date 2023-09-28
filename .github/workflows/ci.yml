@@ -40,4 +40,5 @@ jobs:
             echo "TAG=latest" | tee -a "${GITHUB_ENV}"
           fi
       - name: Dump envs
+        if: startsWith(github.ref, 'refs/tags/') == 'true'
         run: echo "${GCP_PROJECT_ID} ${TAG}"
