@@ -16,8 +16,8 @@ jobs:
     steps:
       - name: Setup
         run: |
-          mkdir ~/.iris
-          cat "iris" ~/.iris/config.json
+          mkdir -p ~/.iris
+          cat "iris" > ~/.iris/config.json
       - uses: actions/upload-artifact@v3
         with:
           name: iris-config-json
