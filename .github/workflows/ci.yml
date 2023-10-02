@@ -21,7 +21,7 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: iris-config-json
-          path: ~/.iris
+          path: ~/.iris/config.json
 
   build:
     needs: [prepare]
@@ -34,8 +34,11 @@ jobs:
       - uses: actions/download-artifact@v3
         with:
           name: iris-config-json
-          path: ~/.iris
+          path: ~/hoge
       - name: Debug
         run: |
-          ls -la ~/.iris
+          ls -la ~/hoge
+          mkdir -p ~/.iris
+          cp ~/hoge/config.json ~/.iris/config.json
           cat ~/.iris/config.json
+          rm -rf ~/hoge
