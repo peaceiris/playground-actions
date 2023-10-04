@@ -4,41 +4,19 @@ on:
   push:
     branches:
       - "main"
-    tags:
-      - "*/*/v*"
   pull_request:
 
 jobs:
-  prepare:
-    runs-on: ubuntu-22.04
-    permissions: {}
-    timeout-minutes: 1
-    steps:
-      - name: Setup
-        run: |
-          mkdir -p ~/.iris
-          echo "iris" > ~/.iris/config.json
-      - uses: actions/upload-artifact@v3
-        with:
-          name: iris-config-json
-          path: ~/.iris/config.json
-
   build:
-    needs: [prepare]
     runs-on: ubuntu-22.04
     permissions:
       contents: read
     timeout-minutes: 1
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/download-artifact@v3
-        with:
-          name: iris-config-json
-          path: ~/hoge
-      - name: Debug
-        run: |
-          ls -la ~/hoge
-          mkdir -p ~/.iris
-          cp ~/hoge/config.json ~/.iris/config.json
-          cat ~/.iris/config.json
-          rm -rf ~/hoge
+      - name: main
+        if: github.ref_name == 'main'
+        run: echo "${{ github.ref_name }} "
+      - name: pull-request
+        if: github.event_name == 'pull_request'
+        run: echo "${{ github.event_name }} "
