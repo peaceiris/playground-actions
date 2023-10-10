@@ -14,7 +14,12 @@ jobs:
     timeout-minutes: 1
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ endsWith(github.ref_name, '/merge') && github.head_ref || github.sha }}
       - name: Dump github context
         env:
           GH_CTX: ${{ toJson(github) }}
         run: echo "${GH_CTX}"
+      - name: Diff
+        run: git --no-pager diff --name-only HEAD $(git merge-base HEAD HEAD^)
