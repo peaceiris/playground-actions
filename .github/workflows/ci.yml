@@ -14,9 +14,7 @@ jobs:
     timeout-minutes: 1
     steps:
       - uses: actions/checkout@v4
-      - name: main
-        if: github.ref_name == 'main'
-        run: echo "${{ github.ref_name }} "
-      - name: pull-request
-        if: github.event_name == 'pull_request'
-        run: echo "${{ github.event_name }} "
+      - name: Dump github context
+        env:
+          GH_CTX: ${{ toJson(github) }}
+        run: echo "${GH_CTX}"
