@@ -18,6 +18,8 @@ jobs:
       - uses: actions/checkout@v4
       - name: Dump env
         run: |
+          echo "${{ github.event_name == 'pull_request' && 'docker' || 'registry' }}"
+          echo "${{ github.event_name != 'pull_request' && 'docker' || 'registry' }}"
           echo "${HOME}"
           ls -la "${HOME}"
       - name: Dump github context
