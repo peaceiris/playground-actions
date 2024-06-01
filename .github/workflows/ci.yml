@@ -20,6 +20,8 @@ jobs:
         run: |
           echo "${{ github.event_name == 'pull_request' && 'docker' || 'registry' }}"
           echo "${{ github.event_name != 'pull_request' && 'docker' || 'registry' }}"
+          echo "${{ github.event_name == 'pull_request' && 'docker' }}"
+          echo "${{ github.event_name == 'pull_request' || 'registry' }}"
           echo "${HOME}"
           ls -la "${HOME}"
       - name: Dump github context
