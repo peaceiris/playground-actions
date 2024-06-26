@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-22.04
     permissions:
       contents: read
-    timeout-minutes: 1
+    timeout-minutes: 3
     steps:
       - uses: actions/checkout@v4
       - name: Dump env
@@ -24,7 +24,58 @@ jobs:
           echo "${{ github.event_name == 'pull_request' || 'registry' }}"
           echo "${HOME}"
           ls -la "${HOME}"
-      - name: Dump github context
+      - name: Dump github context step1
+        id: step1
         env:
           GH_CTX: ${{ toJson(github) }}
-        run: echo "${GH_CTX}"
+          GH_ENV: ${{ toJson(env) }}
+          GH_VARS: ${{ toJson(vars) }}
+          GH_JOB: ${{ toJson(job) }}
+          GH_JOBS: ${{ toJson(jobs) }}
+          GH_STEPS: ${{ toJson(steps) }}
+          GH_RUNNER: ${{ toJson(runner) }}
+          GH_STRATEGY: ${{ toJson(strategy) }}
+          GH_MATRIX: ${{ toJson(matrix) }}
+          GH_NEEDS: ${{ toJson(needs) }}
+          GH_INPUTS: ${{ toJson(inputs) }}
+        run: |
+          echo "${GH_CTX}"
+          echo "${GH_ENV}"
+          echo "${GH_VARS}"
+          echo "${GH_JOB}"
+          echo "${GH_JOBS}"
+          echo "${GH_STEPS}"
+          echo "${GH_RUNNER}"
+          echo "${GH_STRATEGY}"
+          echo "${GH_MATRIX}"
+          echo "${GH_NEEDS}"
+          echo "${GH_INPUTS}"
+          jq < "${GITHUB_EVENT_PATH}"
+      - name: Dump github context step2
+        id: step2
+        env:
+          GH_CTX: ${{ toJson(github) }}
+          GH_ENV: ${{ toJson(env) }}
+          GH_VARS: ${{ toJson(vars) }}
+          GH_JOB: ${{ toJson(job) }}
+          GH_JOBS: ${{ toJson(jobs) }}
+          GH_STEPS: ${{ toJson(steps) }}
+          GH_RUNNER: ${{ toJson(runner) }}
+          GH_STRATEGY: ${{ toJson(strategy) }}
+          GH_MATRIX: ${{ toJson(matrix) }}
+          GH_NEEDS: ${{ toJson(needs) }}
+          GH_INPUTS: ${{ toJson(inputs) }}
+        run: |
+          echo "${GH_CTX}"
+          echo "${GH_CTX}"
+          echo "${GH_ENV}"
+          echo "${GH_VARS}"
+          echo "${GH_JOB}"
+          echo "${GH_JOBS}"
+          echo "${GH_STEPS}"
+          echo "${GH_RUNNER}"
+          echo "${GH_STRATEGY}"
+          echo "${GH_MATRIX}"
+          echo "${GH_NEEDS}"
+          echo "${GH_INPUTS}"
+          jq < "${GITHUB_EVENT_PATH}"
