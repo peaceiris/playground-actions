@@ -31,24 +31,16 @@ jobs:
           GH_ENV: ${{ toJson(env) }}
           GH_VARS: ${{ toJson(vars) }}
           GH_JOB: ${{ toJson(job) }}
-          GH_JOBS: ${{ toJson(jobs) }}
           GH_STEPS: ${{ toJson(steps) }}
           GH_RUNNER: ${{ toJson(runner) }}
-          GH_STRATEGY: ${{ toJson(strategy) }}
-          GH_MATRIX: ${{ toJson(matrix) }}
-          GH_NEEDS: ${{ toJson(needs) }}
           GH_INPUTS: ${{ toJson(inputs) }}
         run: |
           echo "${GH_CTX}"
           echo "${GH_ENV}"
           echo "${GH_VARS}"
           echo "${GH_JOB}"
-          echo "${GH_JOBS}"
           echo "${GH_STEPS}"
           echo "${GH_RUNNER}"
-          echo "${GH_STRATEGY}"
-          echo "${GH_MATRIX}"
-          echo "${GH_NEEDS}"
           echo "${GH_INPUTS}"
           jq < "${GITHUB_EVENT_PATH}"
       - name: Dump github context step2
@@ -58,12 +50,8 @@ jobs:
           GH_ENV: ${{ toJson(env) }}
           GH_VARS: ${{ toJson(vars) }}
           GH_JOB: ${{ toJson(job) }}
-          GH_JOBS: ${{ toJson(jobs) }}
           GH_STEPS: ${{ toJson(steps) }}
           GH_RUNNER: ${{ toJson(runner) }}
-          GH_STRATEGY: ${{ toJson(strategy) }}
-          GH_MATRIX: ${{ toJson(matrix) }}
-          GH_NEEDS: ${{ toJson(needs) }}
           GH_INPUTS: ${{ toJson(inputs) }}
         run: |
           echo "${GH_CTX}"
@@ -71,11 +59,7 @@ jobs:
           echo "${GH_ENV}"
           echo "${GH_VARS}"
           echo "${GH_JOB}"
-          echo "${GH_JOBS}"
           echo "${GH_STEPS}"
           echo "${GH_RUNNER}"
-          echo "${GH_STRATEGY}"
-          echo "${GH_MATRIX}"
-          echo "${GH_NEEDS}"
           echo "${GH_INPUTS}"
           jq < "${GITHUB_EVENT_PATH}"
