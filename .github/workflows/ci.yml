@@ -24,7 +24,7 @@ jobs:
           echo "${{ github.event_name == 'pull_request' || 'registry' }}"
           echo "${HOME}"
           ls -la "${HOME}"
-      - run: env
+      - run: env | sort
       - name: Dump github context step1
         id: step1
         env:
