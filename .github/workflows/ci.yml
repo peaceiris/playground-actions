@@ -24,6 +24,7 @@ jobs:
           echo "${{ github.event_name == 'pull_request' || 'registry' }}"
           echo "${HOME}"
           ls -la "${HOME}"
+      - run: env
       - name: Dump github context step1
         id: step1
         env:
@@ -45,6 +46,25 @@ jobs:
           jq < "${GITHUB_EVENT_PATH}"
       - name: Dump github context step2
         id: step2
+        env:
+          GH_CTX: ${{ toJson(github) }}
+          GH_ENV: ${{ toJson(env) }}
+          GH_VARS: ${{ toJson(vars) }}
+          GH_JOB: ${{ toJson(job) }}
+          GH_STEPS: ${{ toJson(steps) }}
+          GH_RUNNER: ${{ toJson(runner) }}
+          GH_INPUTS: ${{ toJson(inputs) }}
+        run: |
+          echo "${GH_CTX}"
+          echo "${GH_CTX}"
+          echo "${GH_ENV}"
+          echo "${GH_VARS}"
+          echo "${GH_JOB}"
+          echo "${GH_STEPS}"
+          echo "${GH_RUNNER}"
+          echo "${GH_INPUTS}"
+          jq < "${GITHUB_EVENT_PATH}"
+      - name: Dump github context without step id
         env:
           GH_CTX: ${{ toJson(github) }}
           GH_ENV: ${{ toJson(env) }}
