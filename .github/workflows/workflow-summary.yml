@@ -36,7 +36,7 @@ jobs:
       - if: ${{ github.event.inputs.method == 'manual' }}
         run: |
           echo "CREATED='${{ github.event.inputs.daystart }}..${{ github.event.inputs.dayend }}'" | tee -a "${GITHUB_ENV}"
-      - uses: actions/github-script@v7
+      - uses: actions/github-script@v6
         with:
           script: |
             const result = await github.rest.actions.listWorkflowRunsForRepo({
