@@ -27,7 +27,6 @@ jobs:
   summary:
     runs-on: ubuntu-24.04
     timeout-minutes: 3
-    permissions:
     env:
       TZ: 'Asia/Tokyo'
     steps:
