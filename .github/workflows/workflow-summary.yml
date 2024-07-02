@@ -45,4 +45,4 @@ jobs:
               created: ${{ env.CREATED }}
             })
             
-            console.log(result)
+            console.log(JSON.stringify(result, null, 2));
