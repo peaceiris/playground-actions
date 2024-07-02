@@ -36,7 +36,7 @@ jobs:
       - if: ${{ github.event.inputs.method == 'manual' }}
         run: |
           echo "CREATED='${{ github.event.inputs.daystart }}..${{ github.event.inputs.dayend }}'" | tee -a "${GITHUB_ENV}"
-      - uses: actions/github-script@v6
+      - uses: actions/github-script@v7
         with:
           script: |
             const result = await github.rest.actions.listWorkflowRunsForRepo({
@@ -45,29 +45,4 @@ jobs:
               created: ${{ env.CREATED }}
             })
             
-            let workflows = {};
-            for(let workflow of result.data.workflow_runs){
-              const run = await github.rest.actions.listJobsForWorkflowRun({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                run_id: workflow.id,
-              });              
-              var diff = (new Date(run.data.jobs[0].completed_at).getTime()) - (new Date(run.data.jobs[0].started_at).getTime());
-              if(diff > 0){
-                if(workflow.name in workflows){
-                  workflows[workflow.name] += diff / 1000
-                } else {
-                  workflows[workflow.name] = diff / 1000
-                }
-              }
-            }
-            
-            let output = "";
-            for(let key in workflows){
-              output +=  key + " : " + workflows[key] + "s<br>";
-            }
-            
-            await core.summary
-              .addHeading('Workflows report')
-              .addRaw(output)
-              .write()
+            console.log(result)
