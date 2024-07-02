@@ -27,10 +27,10 @@ jobs:
   summary:
     runs-on: ubuntu-24.04
     timeout-minutes: 3
-    env:
-      TZ: 'Asia/Tokyo'
     steps:
       - if: ${{ github.event.inputs.method == '1month' }}
+        env:
+          TZ: 'Asia/Tokyo'
         run: |
           echo "CREATED='>$(date --date='1 months ago' +'%Y-%m-%d')'" | tee -a "${GITHUB_ENV}"
       - if: ${{ github.event.inputs.method == 'manual' }}
