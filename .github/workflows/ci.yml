@@ -16,7 +16,7 @@ jobs:
     timeout-minutes: 3
     steps:
       - uses: actions/checkout@v4
-      - name: Dump env
+      - name: test
         run: |
           echo "${{ github.event_name == 'pull_request' && 'docker' || 'registry' }}"
           echo "${{ github.event_name != 'pull_request' && 'docker' || 'registry' }}"
@@ -24,8 +24,7 @@ jobs:
           echo "${{ github.event_name == 'pull_request' || 'registry' }}"
           echo "${HOME}"
           ls -la "${HOME}"
-      - run: env | sort
-      - name: Dump github context step1
+      - name: Dump step1
         id: step1
         env:
           GH_CTX: ${{ toJson(github) }}
@@ -36,6 +35,7 @@ jobs:
           GH_RUNNER: ${{ toJson(runner) }}
           GH_INPUTS: ${{ toJson(inputs) }}
         run: |
+          env | sort
           echo "${GH_CTX}"
           echo "${GH_ENV}"
           echo "${GH_VARS}"
@@ -44,7 +44,7 @@ jobs:
           echo "${GH_RUNNER}"
           echo "${GH_INPUTS}"
           jq < "${GITHUB_EVENT_PATH}"
-      - name: Dump github context step2
+      - name: Dump step2
         id: step2
         env:
           GH_CTX: ${{ toJson(github) }}
@@ -55,6 +55,7 @@ jobs:
           GH_RUNNER: ${{ toJson(runner) }}
           GH_INPUTS: ${{ toJson(inputs) }}
         run: |
+          env | sort
           echo "${GH_CTX}"
           echo "${GH_CTX}"
           echo "${GH_ENV}"
@@ -64,7 +65,7 @@ jobs:
           echo "${GH_RUNNER}"
           echo "${GH_INPUTS}"
           jq < "${GITHUB_EVENT_PATH}"
-      - name: Dump github context without step id
+      - name: Dump without step id
         env:
           GH_CTX: ${{ toJson(github) }}
           GH_ENV: ${{ toJson(env) }}
@@ -74,6 +75,7 @@ jobs:
           GH_RUNNER: ${{ toJson(runner) }}
           GH_INPUTS: ${{ toJson(inputs) }}
         run: |
+          env | sort
           echo "${GH_CTX}"
           echo "${GH_CTX}"
           echo "${GH_ENV}"
