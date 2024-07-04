@@ -11,11 +11,11 @@ on:
 jobs:
   build:
     runs-on: ubuntu-22.04
+    timeout-minutes: 3
     permissions:
       contents: read
-    timeout-minutes: 3
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
       - name: test
         run: |
           echo "${{ github.event_name == 'pull_request' && 'docker' || 'registry' }}"
@@ -24,64 +24,46 @@ jobs:
           echo "${{ github.event_name == 'pull_request' || 'registry' }}"
           echo "${HOME}"
           ls -la "${HOME}"
+
+  dump:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 1
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
       - name: Dump step1
         id: step1
-        env:
-          GH_CTX: ${{ toJson(github) }}
-          GH_ENV: ${{ toJson(env) }}
-          GH_VARS: ${{ toJson(vars) }}
-          GH_JOB: ${{ toJson(job) }}
-          GH_STEPS: ${{ toJson(steps) }}
-          GH_RUNNER: ${{ toJson(runner) }}
-          GH_INPUTS: ${{ toJson(inputs) }}
         run: |
           env | sort
-          echo "${GH_CTX}"
-          echo "${GH_ENV}"
-          echo "${GH_VARS}"
-          echo "${GH_JOB}"
-          echo "${GH_STEPS}"
-          echo "${GH_RUNNER}"
-          echo "${GH_INPUTS}"
+          echo "${{ toJson(github) }}"
+          echo "${{ toJson(env) }}"
+          echo "${{ toJson(vars) }}"
+          echo "${{ toJson(job) }}"
+          echo "${{ toJson(steps) }}"
+          echo "${{ toJson(runner) }}"
+          echo "${{ toJson(inputs) }}"
           jq < "${GITHUB_EVENT_PATH}"
       - name: Dump step2
         id: step2
-        env:
-          GH_CTX: ${{ toJson(github) }}
-          GH_ENV: ${{ toJson(env) }}
-          GH_VARS: ${{ toJson(vars) }}
-          GH_JOB: ${{ toJson(job) }}
-          GH_STEPS: ${{ toJson(steps) }}
-          GH_RUNNER: ${{ toJson(runner) }}
-          GH_INPUTS: ${{ toJson(inputs) }}
         run: |
           env | sort
-          echo "${GH_CTX}"
-          echo "${GH_CTX}"
-          echo "${GH_ENV}"
-          echo "${GH_VARS}"
-          echo "${GH_JOB}"
-          echo "${GH_STEPS}"
-          echo "${GH_RUNNER}"
-          echo "${GH_INPUTS}"
+          echo "${{ toJson(github) }}"
+          echo "${{ toJson(env) }}"
+          echo "${{ toJson(vars) }}"
+          echo "${{ toJson(job) }}"
+          echo "${{ toJson(steps) }}"
+          echo "${{ toJson(runner) }}"
+          echo "${{ toJson(inputs) }}"
           jq < "${GITHUB_EVENT_PATH}"
       - name: Dump without step id
-        env:
-          GH_CTX: ${{ toJson(github) }}
-          GH_ENV: ${{ toJson(env) }}
-          GH_VARS: ${{ toJson(vars) }}
-          GH_JOB: ${{ toJson(job) }}
-          GH_STEPS: ${{ toJson(steps) }}
-          GH_RUNNER: ${{ toJson(runner) }}
-          GH_INPUTS: ${{ toJson(inputs) }}
         run: |
           env | sort
-          echo "${GH_CTX}"
-          echo "${GH_CTX}"
-          echo "${GH_ENV}"
-          echo "${GH_VARS}"
-          echo "${GH_JOB}"
-          echo "${GH_STEPS}"
-          echo "${GH_RUNNER}"
-          echo "${GH_INPUTS}"
+          echo "${{ toJson(github) }}"
+          echo "${{ toJson(env) }}"
+          echo "${{ toJson(vars) }}"
+          echo "${{ toJson(job) }}"
+          echo "${{ toJson(steps) }}"
+          echo "${{ toJson(runner) }}"
+          echo "${{ toJson(inputs) }}"
           jq < "${GITHUB_EVENT_PATH}"
