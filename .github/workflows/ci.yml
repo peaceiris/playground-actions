@@ -10,10 +10,15 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-22.04
+    runs-on: ${{ matrix.os }}
     timeout-minutes: 3
     permissions:
       contents: read
+    strategy:
+      matrix:
+        os:
+          - ubuntu-22.04
+          - macos-14
     steps:
       - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
       - name: test
@@ -24,12 +29,28 @@ jobs:
           echo "${{ github.event_name == 'pull_request' || 'registry' }}"
           echo "${HOME}"
           ls -la "${HOME}"
+      - name: uname
+        run: |
+          uname -a
+          uname -s
+          uname -n
+          uname -r
+          uname -v
+          uname -m
+          uname -p
+          uname -i
+          uname -o
 
   dump:
-    runs-on: ubuntu-22.04
-    timeout-minutes: 1
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 3
     permissions:
       contents: read
+    strategy:
+      matrix:
+        os:
+          - ubuntu-22.04
+          - macos-14
     steps:
       - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
       - name: Dump step1
