@@ -31,15 +31,14 @@ jobs:
           ls -la "${HOME}"
       - name: uname
         run: |
-          uname -a
-          uname -s
-          uname -n
-          uname -r
-          uname -v
-          uname -m
-          uname -p
-          uname -i
-          uname -o
+          echo "uname -a: $(uname -a)"
+          echo "uname -s: $(uname -s)"
+          echo "uname -n: $(uname -n)"
+          echo "uname -r: $(uname -r)"
+          echo "uname -v: $(uname -v)"
+          echo "uname -m: $(uname -m)"
+          echo "uname -p: $(uname -p)"
+          echo "uname -o: $(uname -o)"
 
   dump:
     runs-on: ${{ matrix.os }}
