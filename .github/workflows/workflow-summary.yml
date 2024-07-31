@@ -13,7 +13,19 @@ jobs:
     #   contents: read
     #   actions: read
     steps:
+      - uses: actions/checkout@v4
+        id: checkout
+      - name: step1
+        id: step1
+        run: sleep 1
+      - name: step2
+        id: step2
+        run: sleep 2
+      - name: step3
+        id: step3
+        run: sleep 3
       - uses: actions/github-script@v7
+        id: dump
         with:
           script: |
             console.log(JSON.stringify(context, null, 2));
