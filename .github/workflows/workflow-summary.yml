@@ -28,21 +28,15 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 3
     steps:
-      - if: ${{ github.event.inputs.method == '1month' }}
-        env:
-          TZ: 'Asia/Tokyo'
-        run: |
-          echo "CREATED='>$(date --date='1 months ago' +'%Y-%m-%d')'" | tee -a "${GITHUB_ENV}"
-      - if: ${{ github.event.inputs.method == 'manual' }}
-        run: |
-          echo "CREATED='${{ github.event.inputs.daystart }}..${{ github.event.inputs.dayend }}'" | tee -a "${GITHUB_ENV}"
       - uses: actions/github-script@v7
         with:
           script: |
-            const result = await github.rest.actions.listWorkflowRunsForRepo({
+            const result = await github.rest.actions.listJobsForWorkflowRun({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              created: ${{ env.CREATED }}
+              run_id: context.runId,
+              per_page: 100,
+              0
             })
-            
+
             console.log(JSON.stringify(result, null, 2));
