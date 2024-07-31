@@ -3,30 +3,15 @@ name: workflow totalization
 # https://qiita.com/yusuke-sasaki/items/60cc128233a1b602c9e8
 
 on:
-  workflow_dispatch:
-    inputs:
-      method:
-        description: '直近1ヶ月を取得するか、手動で取得期間を入力するか選択してください'
-        required: true
-        default: '1month'
-        type: choice
-        options:
-        - 1month
-        - manual
-      daystart:
-        description: '[manual選択時]実績状況の取得開始日をyyyy-MM-ddで入力してください。（例：2022-10-26）'
-        type: string
-      dayend:
-        description: '[manual選択時]実績状況の取得終了日をyyyy-MM-ddで入力してください。（例：2022-10-28）'
-        type: string
-
-permissions:
-  contents: read
+  push:
 
 jobs:
   summary:
     runs-on: ubuntu-24.04
     timeout-minutes: 3
+    permissions:
+      contents: read
+      actions: read
     steps:
       - uses: actions/github-script@v7
         with:
