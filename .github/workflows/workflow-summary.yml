@@ -1,7 +1,5 @@
 name: workflow totalization
 
-# https://qiita.com/yusuke-sasaki/items/60cc128233a1b602c9e8
-
 on:
   push:
 
@@ -9,9 +7,9 @@ jobs:
   summary:
     runs-on: ubuntu-24.04
     timeout-minutes: 3
-    # permissions:
-    #   contents: read
-    #   actions: read
+    permissions:
+      contents: read
+      actions: read
     steps:
       - uses: actions/checkout@v4
         id: checkout
