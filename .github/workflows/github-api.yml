@@ -28,7 +28,6 @@ jobs:
       contents: read
     steps:
       - uses: actions/checkout@v4
-        id: checkout
       - name: step1
         id: step1
         run: sleep 1
