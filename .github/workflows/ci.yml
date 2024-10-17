@@ -57,8 +57,8 @@ jobs:
         # if: false
         id: step1
         run: |
-          jq < "${GITHUB_EVENT_PATH}"
-          # env | sort
+          env | sort
+          # jq < "${GITHUB_EVENT_PATH}"
           # echo "${{ toJson(github) }}"
           # echo "${{ toJson(env) }}"
           # echo "${{ toJson(vars) }}"
