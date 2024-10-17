@@ -41,7 +41,7 @@ jobs:
           echo "uname -o: $(uname -o)"
 
   dump:
-    name: dump ${{ matrix.os }}
+    name: dump-${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     timeout-minutes: 3
     permissions:
@@ -55,7 +55,7 @@ jobs:
       - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
       - name: Dump step1
         # if: false
-        id: step1
+        id: dump-${{ matrix.os }}
         run: |
           echo "${{ toJson(github) }}"
           echo "${{ toJson(env) }}"
