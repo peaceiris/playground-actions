@@ -55,6 +55,7 @@ jobs:
       - name: Dump step1
         id: step1
         run: |
+          jq < "${GITHUB_EVENT_PATH}"
           # env | sort
           # echo "${{ toJson(github) }}"
           # echo "${{ toJson(env) }}"
@@ -63,10 +64,10 @@ jobs:
           # echo "${{ toJson(steps) }}"
           # echo "${{ toJson(runner) }}"
           # echo "${{ toJson(inputs) }}"
-          jq < "${GITHUB_EVENT_PATH}"
       - name: Dump step2
         id: step2
         run: |
+          jq < "${GITHUB_EVENT_PATH}"
           # env | sort
           # echo "${{ toJson(github) }}"
           # echo "${{ toJson(env) }}"
@@ -75,9 +76,9 @@ jobs:
           # echo "${{ toJson(steps) }}"
           # echo "${{ toJson(runner) }}"
           # echo "${{ toJson(inputs) }}"
-          jq < "${GITHUB_EVENT_PATH}"
       - name: Dump without step id
         run: |
+          jq < "${GITHUB_EVENT_PATH}"
           # env | sort
           # echo "${{ toJson(github) }}"
           # echo "${{ toJson(env) }}"
@@ -86,4 +87,3 @@ jobs:
           # echo "${{ toJson(steps) }}"
           # echo "${{ toJson(runner) }}"
           # echo "${{ toJson(inputs) }}"
-          jq < "${GITHUB_EVENT_PATH}"
