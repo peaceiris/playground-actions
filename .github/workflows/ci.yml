@@ -41,6 +41,7 @@ jobs:
           echo "uname -o: $(uname -o)"
 
   dump:
+    name: ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     timeout-minutes: 3
     permissions:
@@ -52,38 +53,43 @@ jobs:
           - macos-14
     steps:
       - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+      - name: GITHUB_JOB ${{ env.GITHUB_JOB }}
+        run: echo "${GITHUB_JOB}"
       - name: Dump step1
+        if: false
         id: step1
         run: |
           jq < "${GITHUB_EVENT_PATH}"
-          # env | sort
-          # echo "${{ toJson(github) }}"
-          # echo "${{ toJson(env) }}"
-          # echo "${{ toJson(vars) }}"
-          # echo "${{ toJson(job) }}"
-          # echo "${{ toJson(steps) }}"
-          # echo "${{ toJson(runner) }}"
-          # echo "${{ toJson(inputs) }}"
+          env | sort
+          echo "${{ toJson(github) }}"
+          echo "${{ toJson(env) }}"
+          echo "${{ toJson(vars) }}"
+          echo "${{ toJson(job) }}"
+          echo "${{ toJson(steps) }}"
+          echo "${{ toJson(runner) }}"
+          echo "${{ toJson(inputs) }}"
       - name: Dump step2
+        if: false
         id: step2
         run: |
           jq < "${GITHUB_EVENT_PATH}"
-          # env | sort
-          # echo "${{ toJson(github) }}"
-          # echo "${{ toJson(env) }}"
-          # echo "${{ toJson(vars) }}"
-          # echo "${{ toJson(job) }}"
-          # echo "${{ toJson(steps) }}"
-          # echo "${{ toJson(runner) }}"
-          # echo "${{ toJson(inputs) }}"
+          env | sort
+          echo "${{ toJson(github) }}"
+          echo "${{ toJson(env) }}"
+          echo "${{ toJson(vars) }}"
+          echo "${{ toJson(job) }}"
+          echo "${{ toJson(steps) }}"
+          echo "${{ toJson(runner) }}"
+          echo "${{ toJson(inputs) }}"
       - name: Dump without step id
+        if: false
         run: |
           jq < "${GITHUB_EVENT_PATH}"
-          # env | sort
-          # echo "${{ toJson(github) }}"
-          # echo "${{ toJson(env) }}"
-          # echo "${{ toJson(vars) }}"
-          # echo "${{ toJson(job) }}"
-          # echo "${{ toJson(steps) }}"
-          # echo "${{ toJson(runner) }}"
-          # echo "${{ toJson(inputs) }}"
+          env | sort
+          echo "${{ toJson(github) }}"
+          echo "${{ toJson(env) }}"
+          echo "${{ toJson(vars) }}"
+          echo "${{ toJson(job) }}"
+          echo "${{ toJson(steps) }}"
+          echo "${{ toJson(runner) }}"
+          echo "${{ toJson(inputs) }}"
