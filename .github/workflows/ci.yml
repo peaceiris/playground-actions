@@ -55,35 +55,35 @@ jobs:
       - name: Dump step1
         id: step1
         run: |
-          env | sort
-          echo "${{ toJson(github) }}"
-          echo "${{ toJson(env) }}"
-          echo "${{ toJson(vars) }}"
-          echo "${{ toJson(job) }}"
-          echo "${{ toJson(steps) }}"
-          echo "${{ toJson(runner) }}"
-          echo "${{ toJson(inputs) }}"
+          # env | sort
+          # echo "${{ toJson(github) }}"
+          # echo "${{ toJson(env) }}"
+          # echo "${{ toJson(vars) }}"
+          # echo "${{ toJson(job) }}"
+          # echo "${{ toJson(steps) }}"
+          # echo "${{ toJson(runner) }}"
+          # echo "${{ toJson(inputs) }}"
           jq < "${GITHUB_EVENT_PATH}"
       - name: Dump step2
         id: step2
         run: |
-          env | sort
-          echo "${{ toJson(github) }}"
-          echo "${{ toJson(env) }}"
-          echo "${{ toJson(vars) }}"
-          echo "${{ toJson(job) }}"
-          echo "${{ toJson(steps) }}"
-          echo "${{ toJson(runner) }}"
-          echo "${{ toJson(inputs) }}"
+          # env | sort
+          # echo "${{ toJson(github) }}"
+          # echo "${{ toJson(env) }}"
+          # echo "${{ toJson(vars) }}"
+          # echo "${{ toJson(job) }}"
+          # echo "${{ toJson(steps) }}"
+          # echo "${{ toJson(runner) }}"
+          # echo "${{ toJson(inputs) }}"
           jq < "${GITHUB_EVENT_PATH}"
       - name: Dump without step id
         run: |
-          env | sort
-          echo "${{ toJson(github) }}"
-          echo "${{ toJson(env) }}"
-          echo "${{ toJson(vars) }}"
-          echo "${{ toJson(job) }}"
-          echo "${{ toJson(steps) }}"
-          echo "${{ toJson(runner) }}"
-          echo "${{ toJson(inputs) }}"
+          # env | sort
+          # echo "${{ toJson(github) }}"
+          # echo "${{ toJson(env) }}"
+          # echo "${{ toJson(vars) }}"
+          # echo "${{ toJson(job) }}"
+          # echo "${{ toJson(steps) }}"
+          # echo "${{ toJson(runner) }}"
+          # echo "${{ toJson(inputs) }}"
           jq < "${GITHUB_EVENT_PATH}"
