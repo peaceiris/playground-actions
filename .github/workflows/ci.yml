@@ -41,7 +41,7 @@ jobs:
           echo "uname -o: $(uname -o)"
 
   dump:
-    name: ${{ matrix.os }}
+    name: dump ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     timeout-minutes: 3
     permissions:
@@ -53,8 +53,6 @@ jobs:
           - macos-14
     steps:
       - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
-      - name: GITHUB_JOB ${{ env.GITHUB_JOB }}
-        run: echo "${GITHUB_JOB}"
       - name: Dump step1
         if: false
         id: step1
