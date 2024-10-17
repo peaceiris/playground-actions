@@ -57,15 +57,15 @@ jobs:
         # if: false
         id: step1
         run: |
-          env | sort
+          echo "${{ toJson(github) }}"
+          echo "${{ toJson(env) }}"
+          echo "${{ toJson(vars) }}"
+          echo "${{ toJson(job) }}"
+          echo "${{ toJson(steps) }}"
+          echo "${{ toJson(runner) }}"
+          echo "${{ toJson(inputs) }}"
+          # env | sort
           # jq < "${GITHUB_EVENT_PATH}"
-          # echo "${{ toJson(github) }}"
-          # echo "${{ toJson(env) }}"
-          # echo "${{ toJson(vars) }}"
-          # echo "${{ toJson(job) }}"
-          # echo "${{ toJson(steps) }}"
-          # echo "${{ toJson(runner) }}"
-          # echo "${{ toJson(inputs) }}"
       - name: Dump step2
         if: false
         id: step2
