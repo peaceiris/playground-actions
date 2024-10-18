@@ -49,12 +49,14 @@ jobs:
           (steps.hoge.outputs.hoge == 'fuga')
         run: echo "${{ steps.hoge.outcome }}"
       - name: outcome
+        if: steps.echo.outcome == 'success'
         run: echo "${{ steps.echo.outcome }}"
       - name: outcome
         id: skipped
         if: false
         run: echo "skipped"
       - name: outcome skipped
+        if: steps.skipped.outcome == 'success'
         run: echo "${{ steps.skipped.outcome }}"
 
   dump:
