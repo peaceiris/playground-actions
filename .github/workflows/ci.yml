@@ -19,6 +19,10 @@ jobs:
         os:
           - ubuntu-24.04
           - macos-14
+    env:
+      IF: |
+        (github.event_name == 'pull_request') &&
+        (steps.hoge.outputs.hoge == 'fuga')
     steps:
       - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
       - name: test
@@ -39,6 +43,12 @@ jobs:
           echo "uname -m: $(uname -m)"
           echo "uname -p: $(uname -p)"
           echo "uname -o: $(uname -o)"
+      - name: Set output
+        id: hoge
+        run: echo "hoge=fuga" | tee -a "${GITHUB_OUTPUT}"
+      - name: Echo
+        if: ${{ env.IF }}
+        run: echo "Hello"
 
   dump:
     name: dump-${{ matrix.os }}
