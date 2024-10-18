@@ -65,7 +65,7 @@ jobs:
       - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
       - name: Dump step1
         # if: false
-        id: format('{0}-{1}', 'dump', matrix.os)
+        id: ${{ format('{0}-{1}', 'dump', matrix.os) }}
         run: |
           echo "dump-${{ matrix.os }}"
           echo "${{ format('{0}-{1}', 'dump', matrix.os) }}"
