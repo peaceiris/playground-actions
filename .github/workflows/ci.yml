@@ -19,10 +19,6 @@ jobs:
         os:
           - ubuntu-24.04
           - macos-14
-    env:
-      IF: |
-        (github.event_name == 'pull_request') &&
-        (steps.hoge.outputs.hoge == 'fuga')
     steps:
       - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
       - name: test
@@ -47,8 +43,21 @@ jobs:
         id: hoge
         run: echo "hoge=fuga" | tee -a "${GITHUB_OUTPUT}"
       - name: Echo
-        if: ${{ env.IF }}
-        run: echo "Hello"
+        id: echo
+        if: |
+          (github.event_name == 'pull_request') &&
+          (steps.hoge.outputs.hoge == 'fuga')
+        run: echo "${{ steps.hoge.outcome }}"
+      - name: outcome
+        if: steps.echo.outcome == 'success'
+        run: echo "${{ steps.echo.outcome }}"
+      - name: outcome
+        id: skipped
+        if: false
+        run: echo "skipped"
+      - name: outcome skipped
+        if: steps.skipped.outcome == 'success'
+        run: echo "${{ steps.skipped.outcome }}"
 
   dump:
     name: dump-${{ matrix.os }}
