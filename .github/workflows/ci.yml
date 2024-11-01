@@ -1,6 +1,9 @@
 name: CI
 
 on:
+  workflow_dispatch:
+  schedule:
+    - cron: '*/5 0 * * *'
   push:
     branches:
       - "main"
@@ -21,6 +24,8 @@ jobs:
           - macos-14
     steps:
       - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+      - name: github.event.repository.default_branch
+        run: echo "${{ github.event.repository.default_branch }}"
       - name: test
         run: |
           echo "${{ github.event_name == 'pull_request' && 'docker' || 'registry' }}"
