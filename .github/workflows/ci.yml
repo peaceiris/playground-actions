@@ -27,7 +27,7 @@ jobs:
       - name: github.event.repository.default_branch
         run: |
           echo "${{ github.event.repository.default_branch }}"
-          echo "${{ github.ref_name == inputs.default_branch }}"
+          echo "${{ github.ref_name == github.event.repository.default_branch }}"
       - name: test
         run: |
           echo "${{ github.event_name == 'pull_request' && 'docker' || 'registry' }}"
