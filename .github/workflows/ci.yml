@@ -3,7 +3,7 @@ name: CI
 on:
   workflow_dispatch:
   schedule:
-    - cron: '*/5 * * * *'
+    - cron: '0 0 * * 1-5' # JST Mon. to Fri. 9:00
   push:
     branches:
       - "main"
