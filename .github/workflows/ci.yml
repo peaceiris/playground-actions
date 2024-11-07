@@ -27,6 +27,7 @@ jobs:
       - name: GITHUB_RUN_ID
         run: |
           echo "${{ env.GITHUB_RUN_ID }}"
+          echo "${{ github.run_id	}}"
           echo "${GITHUB_RUN_ID}"
       - name: test
         run: |
