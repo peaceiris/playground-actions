@@ -14,7 +14,7 @@ on:
 jobs:
   build:
     runs-on: ${{ matrix.os }}
-    timeout-minutes: "${{ github.event_name == 'pull_request' && 5 || 10 }}"
+    timeout-minutes: ${{ github.event_name == 'pull_request' && 5 || 10 }}
     permissions:
       contents: read
     strategy:
