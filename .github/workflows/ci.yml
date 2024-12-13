@@ -14,7 +14,7 @@ on:
 jobs:
   build:
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 3
+    timeout-minutes: "${{ github.event_name == 'pull_request' && '5' || '10' }}"
     permissions:
       contents: read
     strategy:
@@ -31,6 +31,7 @@ jobs:
           echo "${GITHUB_RUN_ID}"
       - name: test
         run: |
+          echo "${{ github.event_name == 'pull_request' && '5' || '10' }}"
           echo "${{ github.event_name == 'pull_request' && 'docker' || 'registry' }}"
           echo "${{ github.event_name != 'pull_request' && 'docker' || 'registry' }}"
           echo "${{ github.event_name == 'pull_request' && 'docker' }}"
