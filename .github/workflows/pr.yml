@@ -9,4 +9,5 @@ jobs:
     timeout-minutes: 1
     permissions: {}
     steps:
+      - run: echo "${GITHUB_EVENT_NAME}"
       - run: jq < "${GITHUB_EVENT_PATH}"
