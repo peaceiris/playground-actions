@@ -1,0 +1,26 @@
+name: Issue comment
+
+on:
+  issue_comment:
+    types:
+      - 'created'
+
+jobs:
+  issue:
+    if: contains(github.event.comment.body, '@peaceiris')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 1
+    permissions:
+      issues: read
+    steps:
+      - name: Dump issue content
+        env:
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+        run: |
+          gh issue view "${ISSUE_NUMBER}" --comments --json body,comments | jq -r '
+            .body as $ib
+            | "<issue_body>\n\($ib)\n</issue_body>\n"
+            + "<issue_comments>\n"
+            + ( .comments | if length == 0 then "No comments" else
+              map("• [" + .author.login + "] " + .body) | join("\n")
+              end + "\n</issue_comments>\n"'
