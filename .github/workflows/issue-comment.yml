@@ -6,13 +6,15 @@ on:
       - 'created'
 
 jobs:
-  issue:
+  dump:
     if: contains(github.event.comment.body, '@peaceiris')
     runs-on: ubuntu-24.04
     timeout-minutes: 1
     permissions:
       issues: read
     steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
       - name: Dump issue content
         env:
           GH_TOKEN: ${{ github.token }}
