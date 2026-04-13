@@ -23,7 +23,7 @@ jobs:
           - ubuntu-24.04
           - macos-14
     steps:
-      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: GITHUB_RUN_ID
         run: |
           echo "${{ env.GITHUB_RUN_ID }}"
@@ -80,7 +80,7 @@ jobs:
           - ubuntu-22.04
           - macos-14
     steps:
-      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Dump step1
         # if: false
         env:
